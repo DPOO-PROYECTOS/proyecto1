@@ -27,7 +27,7 @@ public class LineaVenta {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public int getCantidad() { return cantidad; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 

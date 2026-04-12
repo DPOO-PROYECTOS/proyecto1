@@ -17,7 +17,7 @@ public class PrestamoEmpleado extends Prestamo {
 
 
 
-    // ===== MÉTODOS =====
+    // 	Methods
     public Empleado getEmpleado() { return empleado; }
     public void setEmpleado(Empleado empleado) { this.empleado = empleado; }
 }

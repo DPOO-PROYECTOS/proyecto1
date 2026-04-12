@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InventarioPrestamo {
 
@@ -15,7 +16,7 @@ public class InventarioPrestamo {
 
 
 
-    // Methods 
+    // Methods
     public List<JuegoDeMesa> getJuegos() { return juegos; }
     public void setJuegos(List<JuegoDeMesa> juegos) { this.juegos = juegos; }
 
@@ -31,32 +32,24 @@ public class InventarioPrestamo {
 
 
     public JuegoDeMesa buscarPorNombre(String nombre) {
-        for (JuegoDeMesa j : juegos) {
-            if (j.getNombre().equalsIgnoreCase(nombre)) {
-                return j;
-            }
-        }
-        return null;
+        return juegos.stream()
+                .filter(j -> j.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
     }
 
 
     public List<JuegoDeMesa> getDisponibles() {
-        List<JuegoDeMesa> disponibles = new ArrayList<>();
-        for (JuegoDeMesa j : juegos) {
-            if (j.isDisponible()) {
-                disponibles.add(j);
-            }
-        }
-        return disponibles;
+        return juegos.stream()
+                .filter(JuegoDeMesa::isDisponible)
+                .collect(Collectors.toList());
     }
 
 
     public JuegoDeMesa buscarDisponiblePorNombre(String nombre) {
-        for (JuegoDeMesa j : juegos) {
-            if (j.getNombre().equalsIgnoreCase(nombre) && j.isDisponible()) {
-                return j;
-            }
-        }
-        return null;
+        return juegos.stream()
+                .filter(j -> j.getNombre().equalsIgnoreCase(nombre) && j.isDisponible())
+                .findFirst()
+                .orElse(null);
     }
 }

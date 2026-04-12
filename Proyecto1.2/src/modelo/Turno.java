@@ -20,7 +20,7 @@ public class Turno {
 
 
 
-    // ===== MÉTODOS =====
+    // Mehtods
     public String getDia() { return dia; }
     public void setDia(String dia) { this.dia = dia; }
 

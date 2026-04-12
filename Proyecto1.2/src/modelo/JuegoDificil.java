@@ -15,6 +15,4 @@ public class JuegoDificil extends JuegoDeMesa {
     }
 
 
-
-    // ===== MÉTODOS =====
 }

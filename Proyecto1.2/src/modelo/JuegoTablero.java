@@ -15,6 +15,4 @@ public class JuegoTablero extends JuegoDeMesa {
     }
 
 
-
-    // ===== MÉTODOS =====
 }

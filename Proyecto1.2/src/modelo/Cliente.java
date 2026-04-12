@@ -2,7 +2,7 @@ package modelo;
 
 public class Cliente extends Usuario {
 
-    // Attributes
+    // attributes
     private double puntosFidelidad;
 
 
@@ -15,7 +15,7 @@ public class Cliente extends Usuario {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public double getPuntosFidelidad() { return puntosFidelidad; }
     public void setPuntosFidelidad(double puntosFidelidad) { this.puntosFidelidad = puntosFidelidad; }
 

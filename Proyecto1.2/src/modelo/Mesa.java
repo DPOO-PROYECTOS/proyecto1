@@ -24,7 +24,7 @@ public class Mesa {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public int getNumero() { return numero; }
     public void setNumero(int numero) { this.numero = numero; }
 
@@ -63,12 +63,7 @@ public class Mesa {
 
 
     public boolean tieneBebidaCaliente() {
-        for (Bebida bebida : bebidas) {
-            if (bebida.isEsCaliente()) {
-                return true;
-            }
-        }
-        return false;
+        return bebidas.stream().anyMatch(Bebida::isEsCaliente);
     }
 
 

@@ -15,7 +15,7 @@ public class PlanSemanal {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public List<Turno> getTurnos() { return turnos; }
     public void setTurnos(List<Turno> turnos) { this.turnos = turnos; }
 

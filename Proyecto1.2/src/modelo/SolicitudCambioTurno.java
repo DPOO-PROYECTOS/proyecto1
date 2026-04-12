@@ -23,7 +23,7 @@ public class SolicitudCambioTurno {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public Turno getTurno() { return turno; }
     public void setTurno(Turno turno) { this.turno = turno; }
 

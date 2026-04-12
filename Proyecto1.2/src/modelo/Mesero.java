@@ -17,7 +17,7 @@ public class Mesero extends Empleado {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public List<JuegoDificil> getJuegosConocidos() { return juegosConocidos; }
     public void setJuegosConocidos(List<JuegoDificil> juegosConocidos) { this.juegosConocidos = juegosConocidos; }
 

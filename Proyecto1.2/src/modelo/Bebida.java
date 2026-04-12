@@ -17,7 +17,7 @@ public class Bebida extends ItemMenu {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public boolean isEsAlcoholica() { return esAlcoholica; }
     public void setEsAlcoholica(boolean esAlcoholica) { this.esAlcoholica = esAlcoholica; }
 
