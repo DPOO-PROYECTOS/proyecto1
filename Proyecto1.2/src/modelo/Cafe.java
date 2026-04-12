@@ -32,7 +32,7 @@ public class Cafe {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
@@ -92,6 +92,16 @@ public class Cafe {
 
     public void registrarPrestamo(Prestamo prestamo) {
         historialPrestamos.add(prestamo);
+    }
+
+
+    public void agregarSolicitudCambioTurno(SolicitudCambioTurno solicitud) {
+        solicitudesCambioTurno.add(solicitud);
+    }
+
+
+    public void agregarSugerencia(SugerenciaPlatillo sugerencia) {
+        sugerencias.add(sugerencia);
     }
 
 

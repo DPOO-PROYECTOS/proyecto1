@@ -15,7 +15,7 @@ public class InventarioVenta {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public List<JuegoDeMesa> getJuegos() { return juegos; }
     public void setJuegos(List<JuegoDeMesa> juegos) { this.juegos = juegos; }
 

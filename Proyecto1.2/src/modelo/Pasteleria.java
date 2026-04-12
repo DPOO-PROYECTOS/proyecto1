@@ -17,7 +17,7 @@ public class Pasteleria extends ItemMenu {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods 
     public List<String> getAlergenos() { return alergenos; }
     public void setAlergenos(List<String> alergenos) { this.alergenos = alergenos; }
 

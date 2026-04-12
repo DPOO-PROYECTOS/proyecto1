@@ -21,7 +21,7 @@ public class SugerenciaPlatillo {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 

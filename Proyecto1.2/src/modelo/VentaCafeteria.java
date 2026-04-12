@@ -18,7 +18,7 @@ public class VentaCafeteria extends Venta {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public double getPropina() { return propina; }
     public void setPropina(double propina) { this.propina = propina; }
 

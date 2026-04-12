@@ -20,7 +20,7 @@ public abstract class Prestamo {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public LocalDateTime getFechaInicio() { return fechaInicio; }
     public void setFechaInicio(LocalDateTime fechaInicio) { this.fechaInicio = fechaInicio; }
 

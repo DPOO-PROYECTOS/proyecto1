@@ -19,7 +19,7 @@ public class Empleado extends Usuario {
 
 
 
-    // ===== MÉTODOS =====
+    // Methods
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
 
