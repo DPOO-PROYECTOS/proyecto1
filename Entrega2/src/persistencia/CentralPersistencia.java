@@ -2,8 +2,11 @@ package persistencia;
 
 import java.io.IOException;
 
+<<<<<<< HEAD
 import org.json.JSONObject;
 
+=======
+>>>>>>> c3553e8 (Entrega 2 finalizada y organizada en carpetas)
 import modelo.Cafe;
 
 public class CentralPersistencia {
@@ -22,6 +25,7 @@ public class CentralPersistencia {
         PersistenciaMesa pMe = new PersistenciaMesa();
         pMe.cargarMesas(cafe, archivoMesas);
     }
+<<<<<<< HEAD
 
     public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario,String archivoMenu, String archivoMesas) throws IOException {
 
@@ -35,4 +39,6 @@ public class CentralPersistencia {
         pM.salvarMenu(cafe, new JSONObject(), archivoMenu);
         pMe.salvarMesas(cafe, new JSONObject(), archivoMesas);
     }
+=======
+>>>>>>> c3553e8 (Entrega 2 finalizada y organizada en carpetas)
 }
