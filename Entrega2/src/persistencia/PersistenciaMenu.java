@@ -23,12 +23,11 @@ public class PersistenciaMenu {
      */
     public void cargarMenu(Cafe cafe, String archivo) throws IOException, JSONException {
         File f = new File(archivo);
-        if (!f.exists()) return; // Seguridad: si el archivo no existe, no hacemos nada
+        if (!f.exists()) return;
 
         String jsonCompleto = new String(Files.readAllBytes(f.toPath()));
         JSONObject raiz = new JSONObject(jsonCompleto);
 
-        // Verificamos que el JSON tenga la llave "menu"
         if (raiz.has("menu")) {
             JSONArray jMenu = raiz.getJSONArray("menu");
             for (int i = 0; i < jMenu.length(); i++) {
@@ -55,10 +54,6 @@ public class PersistenciaMenu {
         }
     }
 
-    /**
-     * Salva el menú actual del objeto Cafe en un archivo JSON
-     * @throws JSONException 
-     */
     public void salvarMenu(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jMenu = new JSONArray();
         
@@ -67,7 +62,6 @@ public class PersistenciaMenu {
             jItem.put("nombre", item.getNombre());
             jItem.put("precio", item.getPrecio());
             
-            // Usamos getSimpleName() para que guarde "Bebida" o "Pasteleria" automáticamente
             jItem.put("tipo", item.getClass().getSimpleName());
 
             if (item instanceof Bebida) {
@@ -88,9 +82,8 @@ public class PersistenciaMenu {
         
         jobject.put("menu", jMenu);
 
-        // Escritura física del archivo
         PrintWriter pw = new PrintWriter(new FileWriter(archivo));
-        pw.println(jobject.toString(2)); // El '2' es para que el JSON sea legible (con sangría)
+        pw.println(jobject.toString(2)); 
         pw.close();
     }
 }

@@ -8,10 +8,6 @@ import modelo.Cafe;
 
 public class CentralPersistencia {
 
-    /**
-     * Carga toda la información del sistema desde los archivos JSON
-     * @throws JSONException 
-     */
     public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario, String archivoMenu, String archivoMesas) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
@@ -27,10 +23,6 @@ public class CentralPersistencia {
         pMe.cargarMesas(cafe, archivoMesas);
     }
 
-    /**
-     * Guarda toda la información del sistema en archivos JSON
-     * @throws JSONException 
-     */
     public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario, String archivoMenu, String archivoMesas) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
@@ -38,7 +30,6 @@ public class CentralPersistencia {
         PersistenciaMenu pM = new PersistenciaMenu();
         PersistenciaMesa pMe = new PersistenciaMesa();
 
-        // Se pasa un JSONObject nuevo a cada uno para que gestionen su propia raíz
         pU.salvarUsuarios(cafe, new JSONObject(), archivoUsuarios);
         pI.salvarInventario(cafe, new JSONObject(), archivoInventario);
         pM.salvarMenu(cafe, new JSONObject(), archivoMenu);

@@ -15,18 +15,13 @@ import modelo.Mesa;
 
 public class PersistenciaMesa {
 
-    /**
-     * Carga la configuración de las mesas desde un archivo JSON
-     * @throws JSONException 
-     */
     public void cargarMesas(Cafe cafe, String archivo) throws IOException, JSONException {
         File f = new File(archivo);
-        if (!f.exists()) return; // Si el archivo no existe (primera corrida), no hacemos nada
+        if (!f.exists()) return; 
 
         String jsonCompleto = new String(Files.readAllBytes(f.toPath()));
         JSONObject raiz = new JSONObject(jsonCompleto);
 
-        // Verificamos que la llave "mesas" exista para evitar errores
         if (raiz.has("mesas")) {
             JSONArray jMesas = raiz.getJSONArray("mesas");
             for (int i = 0; i < jMesas.length(); i++) {
@@ -38,7 +33,6 @@ public class PersistenciaMesa {
                 boolean tieneNinos = jMesa.getBoolean("tieneNinos");
                 boolean tieneJovenes = jMesa.getBoolean("tieneJovenes");
 
-                // Creamos la mesa y seteamos su estado actual
                 Mesa mesa = new Mesa(numero, capacidad);
                 mesa.setNumPersonas(numPersonas);
                 mesa.setTieneNinos(tieneNinos);
@@ -49,10 +43,6 @@ public class PersistenciaMesa {
         }
     }
 
-    /**
-     * Guarda el estado de las mesas en un archivo JSON
-     * @throws JSONException 
-     */
     public void salvarMesas(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jMesas = new JSONArray();
         
@@ -68,7 +58,6 @@ public class PersistenciaMesa {
         
         jobject.put("mesas", jMesas);
 
-        // Escritura del archivo en la carpeta /data
         PrintWriter pw = new PrintWriter(new FileWriter(archivo));
         pw.println(jobject.toString(2));
         pw.close();

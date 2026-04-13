@@ -19,15 +19,13 @@ import modelo.JuegoTablero;
 
 public class PersistenciaInventario {
 
-    // 1. CARGAR: El "throws IOException" es obligatorio aquí
     public void cargarInventario(Cafe cafe, String archivo) throws IOException, JSONException {
         File f = new File(archivo);
-        if (!f.exists()) return; // Si no hay archivo, no cargamos nada
+        if (!f.exists()) return; 
 
         String jsonCompleto = new String(Files.readAllBytes(f.toPath()));
         JSONObject raiz = new JSONObject(jsonCompleto);
 
-        // Cargar Inventario de Préstamo
         if (raiz.has("inventarioPrestamo")) {
             JSONArray jPrestamo = raiz.getJSONArray("inventarioPrestamo");
             for (int i = 0; i < jPrestamo.length(); i++) {
@@ -55,7 +53,6 @@ public class PersistenciaInventario {
         }
     }
 
-    // 2. CREADOR: Aquí mapeamos el "tipo" del JSON a la clase real de Java
     private JuegoDeMesa crearJuego(String tipo, String nombre, int anio, String empresa, int minJ, int maxJ, boolean aptaMenores, boolean soloAdultos, String estado, boolean disponible) {
         if ("JuegoDificil".equals(tipo)) {
             return new JuegoDificil(nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
@@ -68,8 +65,6 @@ public class PersistenciaInventario {
         }
         return null;
     }
-
-    // 3. SALVAR: Aquí también es obligatorio el "throws IOException"
     public void salvarInventario(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jPrestamo = new JSONArray();
         
@@ -87,7 +82,6 @@ public class PersistenciaInventario {
             jJuego.put("vecesPrestado", juego.getVecesPrestado());
             jJuego.put("precioVenta", juego.getPrecioVenta());
             
-            // Esto es lo que permite que crearJuego funcione al cargar
             jJuego.put("tipo", juego.getClass().getSimpleName()); 
             
             jPrestamo.put(jJuego);
@@ -95,7 +89,6 @@ public class PersistenciaInventario {
         
         jobject.put("inventarioPrestamo", jPrestamo);
 
-        // Guardar el archivo físicamente
         PrintWriter pw = new PrintWriter(new FileWriter(archivo));
         pw.println(jobject.toString(2));
         pw.close();
