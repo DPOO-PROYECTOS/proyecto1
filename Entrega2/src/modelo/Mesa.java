@@ -63,7 +63,10 @@ public class Mesa {
 
 
     public boolean tieneBebidaCaliente() {
-        return bebidas.stream().anyMatch(Bebida::isEsCaliente);
+        for (Bebida b : bebidas) {
+            if (b.isEsCaliente()) return true;
+        }
+        return false;
     }
 
 
