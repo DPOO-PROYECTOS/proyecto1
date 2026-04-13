@@ -1,0 +1,7 @@
+# Binarios compilados de Java
+bin/
+*.class
+
+# Archivos de configuración local de Eclipse
+.metadata/
+*.launch
