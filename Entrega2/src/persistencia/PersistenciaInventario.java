@@ -7,77 +7,95 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import modelo.Cafe;
 import modelo.JuegoDeMesa;
 import modelo.JuegoDificil;
+import modelo.JuegoDeAccion;
+import modelo.JuegoDeCartas;
+import modelo.JuegoTablero;
 
 public class PersistenciaInventario {
 
-    public void cargarInventario(Cafe cafe, String archivo) throws IOException {
-        String jsonCompleto = new String(Files.readAllBytes(new File(archivo).toPath()));
+    // 1. CARGAR: El "throws IOException" es obligatorio aquí
+    public void cargarInventario(Cafe cafe, String archivo) throws IOException, JSONException {
+        File f = new File(archivo);
+        if (!f.exists()) return; // Si no hay archivo, no cargamos nada
+
+        String jsonCompleto = new String(Files.readAllBytes(f.toPath()));
         JSONObject raiz = new JSONObject(jsonCompleto);
 
-        JSONArray jPrestamo = raiz.getJSONArray("inventarioPrestamo");
-        for (int i = 0; i < jPrestamo.length(); i++) {
-            JSONObject jJuego = jPrestamo.getJSONObject(i);
+        // Cargar Inventario de Préstamo
+        if (raiz.has("inventarioPrestamo")) {
+            JSONArray jPrestamo = raiz.getJSONArray("inventarioPrestamo");
+            for (int i = 0; i < jPrestamo.length(); i++) {
+                JSONObject jJuego = jPrestamo.getJSONObject(i);
+                
+                String tipo = jJuego.getString("tipo");
+                String nombre = jJuego.getString("nombre");
+                int anio = jJuego.getInt("anioPublicacion");
+                String empresa = jJuego.getString("empresaMatriz");
+                int minJ = jJuego.getInt("minJugadores");
+                int maxJ = jJuego.getInt("maxJugadores");
+                boolean aptaMenores = jJuego.getBoolean("aptaMenores5");
+                boolean soloAdultos = jJuego.getBoolean("soloAdultos");
+                String estado = jJuego.getString("estado");
+                boolean disponible = jJuego.getBoolean("disponible");
 
-            String nombre = jJuego.getString("nombre");
-            int anio = jJuego.getInt("anioPublicacion");
-            String empresa = jJuego.getString("empresaMatriz");
-            int minJ = jJuego.getInt("minJugadores");
-            int maxJ = jJuego.getInt("maxJugadores");
-            boolean aptaMenores = jJuego.getBoolean("aptaMenores5");
-            boolean soloAdultos = jJuego.getBoolean("soloAdultos");
-            String estado = jJuego.getString("estado");
-            boolean disponible = jJuego.getBoolean("disponible");
-            int vecesPrestado = jJuego.getInt("vecesPrestado");
-            double precioVenta = jJuego.getDouble("precioVenta");
-            String tipo = jJuego.getString("tipo");
-
-            JuegoDeMesa juego = crearJuego(tipo, nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
-            if (juego != null) {
-                juego.setVecesPrestado(vecesPrestado);
-                juego.setPrecioVenta(precioVenta);
-                cafe.getInventarioPrestamo().agregarJuego(juego);
+                JuegoDeMesa juego = crearJuego(tipo, nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
+                
+                if (juego != null) {
+                    juego.setVecesPrestado(jJuego.getInt("vecesPrestado"));
+                    juego.setPrecioVenta(jJuego.getDouble("precioVenta"));
+                    cafe.getInventarioPrestamo().agregarJuego(juego);
+                }
             }
         }
     }
 
-    private JuegoDeMesa crearJuego(String tipo, String nombre, int anio, String empresa,int minJ, int maxJ, boolean aptaMenores,boolean soloAdultos, String estado, boolean disponible) {
+    // 2. CREADOR: Aquí mapeamos el "tipo" del JSON a la clase real de Java
+    private JuegoDeMesa crearJuego(String tipo, String nombre, int anio, String empresa, int minJ, int maxJ, boolean aptaMenores, boolean soloAdultos, String estado, boolean disponible) {
         if ("JuegoDificil".equals(tipo)) {
-            return new JuegoDificil(nombre, anio, empresa, minJ, maxJ,aptaMenores, soloAdultos, estado, disponible);
+            return new JuegoDificil(nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
+        } else if ("JuegoDeAccion".equals(tipo)) {
+            return new JuegoDeAccion(nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
+        } else if ("JuegoDeCartas".equals(tipo)) {
+            return new JuegoDeCartas(nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
+        } else if ("JuegoTablero".equals(tipo)) {
+            return new JuegoTablero(nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
         }
         return null;
     }
-    public void salvarInventario(Cafe cafe, JSONObject jobject, String archivo) throws IOException {
+
+    // 3. SALVAR: Aquí también es obligatorio el "throws IOException"
+    public void salvarInventario(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jPrestamo = new JSONArray();
+        
         for (JuegoDeMesa juego : cafe.getInventarioPrestamo().getJuegos()) {
             JSONObject jJuego = new JSONObject();
-            jJuego.put("nombre",juego.getNombre());
-            jJuego.put("anioPublicacion",juego.getAnioPublicacion());
-            jJuego.put("empresaMatriz",juego.getEmpresaMatriz());
-            jJuego.put("minJugadores",juego.getMinJugadores());
-            jJuego.put("maxJugadores",juego.getMaxJugadores());
-            jJuego.put("aptaMenores5",juego.isAptaMenores5());
-            jJuego.put("soloAdultos",juego.isSoloAdultos());
-            jJuego.put("estado",juego.getEstado());
-            jJuego.put("disponible",juego.isDisponible());
-            jJuego.put("vecesPrestado",juego.getVecesPrestado());
-            jJuego.put("precioVenta",juego.getPrecioVenta());
-            jJuego.put("tipo", juego.getClass().getSimpleName());
+            jJuego.put("nombre", juego.getNombre());
+            jJuego.put("anioPublicacion", juego.getAnioPublicacion());
+            jJuego.put("empresaMatriz", juego.getEmpresaMatriz());
+            jJuego.put("minJugadores", juego.getMinJugadores());
+            jJuego.put("maxJugadores", juego.getMaxJugadores());
+            jJuego.put("aptaMenores5", juego.isAptaMenores5());
+            jJuego.put("soloAdultos", juego.isSoloAdultos());
+            jJuego.put("estado", juego.getEstado());
+            jJuego.put("disponible", juego.isDisponible());
+            jJuego.put("vecesPrestado", juego.getVecesPrestado());
+            jJuego.put("precioVenta", juego.getPrecioVenta());
+            
+            // Esto es lo que permite que crearJuego funcione al cargar
+            jJuego.put("tipo", juego.getClass().getSimpleName()); 
+            
             jPrestamo.put(jJuego);
         }
+        
         jobject.put("inventarioPrestamo", jPrestamo);
-        JSONArray jVenta = new JSONArray();
-        for (JuegoDeMesa juego : cafe.getInventarioVenta().getJuegos()) {
-            JSONObject jJuego = new JSONObject();
-            jJuego.put("nombre", juego.getNombre());
-            jVenta.put(jJuego);
-        }
-        jobject.put("inventarioVenta", jVenta);
 
+        // Guardar el archivo físicamente
         PrintWriter pw = new PrintWriter(new FileWriter(archivo));
         pw.println(jobject.toString(2));
         pw.close();

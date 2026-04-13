@@ -2,12 +2,17 @@ package persistencia;
 
 import java.io.IOException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import modelo.Cafe;
 
 public class CentralPersistencia {
 
-    public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario,String archivoMenu, String archivoMesas) throws IOException {
+    /**
+     * Carga toda la información del sistema desde los archivos JSON
+     * @throws JSONException 
+     */
+    public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario, String archivoMenu, String archivoMesas) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
         pU.cargarUsuarios(cafe, archivoUsuarios);
@@ -22,13 +27,18 @@ public class CentralPersistencia {
         pMe.cargarMesas(cafe, archivoMesas);
     }
 
-    public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario,String archivoMenu, String archivoMesas) throws IOException {
+    /**
+     * Guarda toda la información del sistema en archivos JSON
+     * @throws JSONException 
+     */
+    public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventario, String archivoMenu, String archivoMesas) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
         PersistenciaInventario pI = new PersistenciaInventario();
         PersistenciaMenu pM = new PersistenciaMenu();
         PersistenciaMesa pMe = new PersistenciaMesa();
 
+        // Se pasa un JSONObject nuevo a cada uno para que gestionen su propia raíz
         pU.salvarUsuarios(cafe, new JSONObject(), archivoUsuarios);
         pI.salvarInventario(cafe, new JSONObject(), archivoInventario);
         pM.salvarMenu(cafe, new JSONObject(), archivoMenu);

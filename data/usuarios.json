@@ -1,0 +1,26 @@
+{"usuarios": [
+  {
+    "password": "1234",
+    "login": "admin"
+  },
+  {
+    "password": "pass1",
+    "login": "mesero1"
+  },
+  {
+    "password": "pass2",
+    "login": "mesero2"
+  },
+  {
+    "password": "pass3",
+    "login": "cocinero1"
+  },
+  {
+    "password": "c123",
+    "login": "cliente1"
+  },
+  {
+    "password": "c123",
+    "login": "cliente2"
+  }
+]}
