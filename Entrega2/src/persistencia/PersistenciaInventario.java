@@ -36,13 +36,14 @@ public class PersistenciaInventario {
             double precioVenta = jJuego.getDouble("precioVenta");
             String tipo = jJuego.getString("tipo");
 
-            JuegoDeMesa juego = new JuegoDeMesa (nombre, anioPublicacion, empresaMatriz,minJugadores, maxJugadores, aptaMenores5,
-                    soloAdultos,estado, disponible);
+            JuegoDeMesa juego = crearJuego(tipo, nombre, anio, empresa, minJ, maxJ, aptaMenores, soloAdultos, estado, disponible);
             if (juego != null) {
                 juego.setVecesPrestado(vecesPrestado);
                 juego.setPrecioVenta(precioVenta);
                 cafe.getInventarioPrestamo().agregarJuego(juego);
             }
+        }
+    }
 
     private JuegoDeMesa crearJuego(String tipo, String nombre, int anio, String empresa,int minJ, int maxJ, boolean aptaMenores,boolean soloAdultos, String estado, boolean disponible) {
         if ("JuegoDificil".equals(tipo)) {
@@ -65,6 +66,7 @@ public class PersistenciaInventario {
             jJuego.put("disponible",juego.isDisponible());
             jJuego.put("vecesPrestado",juego.getVecesPrestado());
             jJuego.put("precioVenta",juego.getPrecioVenta());
+            jJuego.put("tipo", juego.getClass().getSimpleName());
             jPrestamo.put(jJuego);
         }
         jobject.put("inventarioPrestamo", jPrestamo);

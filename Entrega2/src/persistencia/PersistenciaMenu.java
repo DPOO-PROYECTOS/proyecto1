@@ -25,6 +25,7 @@ public class PersistenciaMenu {
             JSONObject jItem = jMenu.getJSONObject(i);
             String nombre = jItem.getString("nombre");
             double precio = jItem.getDouble("precio");
+            String tipo = jItem.getString("tipo");
 
             if ("Bebida".equals(tipo)) {
                 boolean esAlcoholica = jItem.getBoolean("esAlcoholica");
@@ -48,6 +49,7 @@ public class PersistenciaMenu {
             JSONObject jItem = new JSONObject();
             jItem.put("nombre", item.getNombre());
             jItem.put("precio", item.getPrecio());
+            jItem.put("tipo", item.getClass().getSimpleName());
 
             if (item instanceof Bebida) {
                 Bebida b = (Bebida) item;

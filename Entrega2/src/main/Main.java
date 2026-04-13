@@ -1,7 +1,7 @@
 package main;
 
 import modelo.*;
-import logica.Cafe;
+import logica.CafeLogica;
 import persistencia.CentralPersistencia;
 
 public class Main {
