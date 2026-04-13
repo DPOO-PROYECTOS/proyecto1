@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InventarioPrestamo {
 
@@ -32,24 +31,26 @@ public class InventarioPrestamo {
 
 
     public JuegoDeMesa buscarPorNombre(String nombre) {
-        return juegos.stream()
-                .filter(j -> j.getNombre().equalsIgnoreCase(nombre))
-                .findFirst()
-                .orElse(null);
+        for (JuegoDeMesa j : juegos) {
+            if (j.getNombre().equalsIgnoreCase(nombre)) return j;
+        }
+        return null;
     }
 
 
     public List<JuegoDeMesa> getDisponibles() {
-        return juegos.stream()
-                .filter(JuegoDeMesa::isDisponible)
-                .collect(Collectors.toList());
+        List<JuegoDeMesa> disponibles = new ArrayList<>();
+        for (JuegoDeMesa j : juegos) {
+            if (j.isDisponible()) disponibles.add(j);
+        }
+        return disponibles;
     }
 
 
     public JuegoDeMesa buscarDisponiblePorNombre(String nombre) {
-        return juegos.stream()
-                .filter(j -> j.getNombre().equalsIgnoreCase(nombre) && j.isDisponible())
-                .findFirst()
-                .orElse(null);
+        for (JuegoDeMesa j : juegos) {
+            if (j.getNombre().equalsIgnoreCase(nombre) && j.isDisponible()) return j;
+        }
+        return null;
     }
 }

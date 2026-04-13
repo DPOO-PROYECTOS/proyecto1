@@ -2,9 +2,6 @@ package modelo;
 
 public class JuegoDificil extends JuegoDeMesa {
 
-    // Attributes
-
-
 
     // Constructor
     public JuegoDificil(String nombre, int anioPublicacion, String empresaMatriz,
