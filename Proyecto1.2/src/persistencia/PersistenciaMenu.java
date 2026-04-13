@@ -23,7 +23,6 @@ public class PersistenciaMenu {
         JSONArray jMenu = raiz.getJSONArray("menu");
         for (int i = 0; i < jMenu.length(); i++) {
             JSONObject jItem = jMenu.getJSONObject(i);
-            String tipo   = jItem.getString("tipo");
             String nombre = jItem.getString("nombre");
             double precio = jItem.getDouble("precio");
 
@@ -47,7 +46,6 @@ public class PersistenciaMenu {
         JSONArray jMenu = new JSONArray();
         for (ItemMenu item : cafe.getMenu()) {
             JSONObject jItem = new JSONObject();
-            jItem.put("tipo",   item.getClass().getSimpleName());
             jItem.put("nombre", item.getNombre());
             jItem.put("precio", item.getPrecio());
 
