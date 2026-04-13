@@ -17,8 +17,4 @@ public class CentralPersistencia
 	}
 	public static  getPersistenciaMesa(Cafe cafe, String archivo) {
 		cargarMesa(cafe, archivo);
-	}
-	public static  getPersistenciaSugerencias(Cafe cafe, String archivo) {
-		cargarSugerencias(cafe, archivo);
-	}
 }
