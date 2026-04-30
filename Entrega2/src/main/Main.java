@@ -25,12 +25,17 @@ public class Main {
 
         JuegoDeMesa catan = new JuegoTablero("Catan", 1995, "Devir", 3, 4, false, false, "Excelente", true);
         logica.agregarJuegoInventarioPrestamo(catan);
-
         JuegoDeMesa jenga = new JuegoDeAccion("Jenga", 1983, "Hasbro", 2, 8, true, false, "Bueno", true);
         logica.agregarJuegoInventarioPrestamo(jenga);
-
         JuegoDeMesa gloomhaven = new JuegoDificil("Gloomhaven", 2017, "Cephalofair", 1, 4, false, true, "Nuevo", true);
         logica.agregarJuegoInventarioPrestamo(gloomhaven);
+        
+        JuegoDeMesa ticketToRide = new JuegoTablero("Ticket to Ride", 2004, "Days of Wonder", 2, 5, false, false, "Bueno", true);
+        logica.agregarJuegoInventarioVenta(ticketToRide, 5.00);
+        JuegoDeMesa operacion = new JuegoDeAccion("Operación", 1965, "Hasbro", 2, 6, true, false, "Regular", false);
+        logica.agregarJuegoInventarioVenta(operacion, 8.65);
+        JuegoDeMesa pandemicLegacy = new JuegoDificil("Pandemic Legacy", 2015, "Z-Man Games", 2, 4, false, true, "Nuevo", true);
+        logica.agregarJuegoInventarioVenta(pandemicLegacy, 10.65);
 
         logica.agregarItemMenu(new Bebida("Cafe Latte", 4500, false, true));
         logica.agregarItemMenu(new Bebida("Cerveza Artesanal", 8000, true, false));
@@ -42,7 +47,7 @@ public class Main {
         logica.agregarItemMenu(brownie);
 
         try {
-            CentralPersistencia.guardarTodo(cafe, "data/usuarios.json","data/inventario.json","data/menu.json","data/mesas.json");
+            CentralPersistencia.guardarTodo(cafe, "data/usuarios.json","data/inventarioPrestamos.json","data/menu.json","data/mesas.json", "data/inventarioVentas.json");
 
             System.out.println("Archivos generados correctamente");
         } catch (Exception e) {
