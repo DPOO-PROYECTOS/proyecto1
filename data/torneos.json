@@ -1,0 +1,9 @@
+{"torneos": [{
+  "diaSemana": "Lunes",
+  "tipo": "TorneoAmistoso",
+  "inscripciones": [],
+  "cuposDisponibles": 8,
+  "cuposFanaticosRestantes": 2,
+  "maxParticipantes": 10,
+  "juego": "Ticket to Ride"
+}]}

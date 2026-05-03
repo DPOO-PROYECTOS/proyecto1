@@ -8,7 +8,7 @@ import modelo.Cafe;
 
 public class CentralPersistencia {
 
-    public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventarioPrestamo, String archivoMenu, String archivoMesas, String archivoInventarioVentas) throws IOException, JSONException {
+    public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventarioPrestamo, String archivoMenu, String archivoMesas, String archivoInventarioVentas, String archivoTorneos) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
         pU.cargarUsuarios(cafe, archivoUsuarios);
@@ -24,20 +24,26 @@ public class CentralPersistencia {
 
         PersistenciaMesa pMe = new PersistenciaMesa();
         pMe.cargarMesas(cafe, archivoMesas);
+        
+        PersistenciaTorneo pT = new PersistenciaTorneo();
+        pT.cargarTorneos(cafe, archivoTorneos);
     }
 
-    public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventarioPrestamo, String archivoMenu, String archivoMesas, String archivoInventarioVentas) throws IOException, JSONException {
+    public static void guardarTodo(Cafe cafe, String archivoUsuarios, String archivoInventarioPrestamo, String archivoMenu, String archivoMesas, String archivoInventarioVentas, String archivoTorneos) throws IOException, JSONException {
 
         PersistenciaUsuario pU = new PersistenciaUsuario();
         PersistenciaInventarioPrestamo pIP = new PersistenciaInventarioPrestamo();
         PersistenciaInventarioVenta pIV = new PersistenciaInventarioVenta();
         PersistenciaMenu pM = new PersistenciaMenu();
         PersistenciaMesa pMe = new PersistenciaMesa();
-
+        PersistenciaTorneo pT = new PersistenciaTorneo()
+        		;
+        pT.salvarTorneos(cafe, new JSONObject(), archivoTorneos);
         pU.salvarUsuarios(cafe, new JSONObject(), archivoUsuarios);
         pIP.salvarInventarioPrestamo(cafe, new JSONObject(), archivoInventarioPrestamo);
         pIV.salvarInventarioVenta(cafe, new JSONObject(), archivoInventarioVentas);
         pM.salvarMenu(cafe, new JSONObject(), archivoMenu);
         pMe.salvarMesas(cafe, new JSONObject(), archivoMesas);
+        
     }
 }

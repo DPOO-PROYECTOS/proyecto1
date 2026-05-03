@@ -30,7 +30,22 @@ public class PersistenciaUsuario {
                 String login = jUsuario.getString("login");
                 String password = jUsuario.getString("password");
                 
-                Usuario usuario = new Usuario(login, password);
+                String tipo = jUsuario.has("tipo") ? jUsuario.getString("tipo") : "Usuario";
+                
+                Usuario usuario = null;
+                
+                
+                if (tipo.equals("Admin")) {
+                    usuario = new modelo.Admin(login, password);
+                } else if (tipo.equals("Cliente")) {
+                    usuario = new modelo.Cliente(login, password);
+                } else if (tipo.equals("Mesero")) {
+                    usuario = new modelo.Mesero(login, password);
+                } else if (tipo.equals("Empleado")) {
+                    usuario = new modelo.Empleado(login, password, "cocinero");
+                } else {
+                    usuario = new modelo.Usuario(login, password);
+                }
                 cafe.agregarUsuario(usuario);
             }
         }
@@ -43,6 +58,7 @@ public class PersistenciaUsuario {
             JSONObject jUsuario = new JSONObject();
             jUsuario.put("login", usuario.getLogin());
             jUsuario.put("password", usuario.getPassword());
+            jUsuario.put("tipo", usuario.getClass().getSimpleName());
             jUsuarios.put(jUsuario);
         }
         

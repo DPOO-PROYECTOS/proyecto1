@@ -1,10 +1,5 @@
-{"usuarios": [
-  {
-    "password": "1234",
-    "login": "admin"
-  },
-  {
-    "password": "pass1",
-    "login": "mesero1"
-  }
-]}
+{"usuarios": [{
+  "password": "1234",
+  "tipo": "Admin",
+  "login": "admin"
+}]}
