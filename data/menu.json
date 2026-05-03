@@ -1,32 +1,7 @@
-{"menu": [
-  {
-    "esAlcoholica": false,
-    "precio": 4500,
-    "tipo": "Bebida",
-    "esCaliente": true,
-    "nombre": "Cafe Latte"
-  },
-  {
-    "esAlcoholica": true,
-    "precio": 8000,
-    "tipo": "Bebida",
-    "esCaliente": false,
-    "nombre": "Cerveza Artesanal"
-  },
-  {
-    "esAlcoholica": false,
-    "precio": 3500,
-    "tipo": "Bebida",
-    "esCaliente": false,
-    "nombre": "Limonada"
-  },
-  {
-    "precio": 5000,
-    "tipo": "Pasteleria",
-    "alergenos": [
-      "Nueces",
-      "Gluten"
-    ],
-    "nombre": "Brownie"
-  }
-]}
+{"menu": [{
+  "esAlcoholica": false,
+  "precio": 4500,
+  "tipo": "Bebida",
+  "esCaliente": true,
+  "nombre": "Cafe Latte"
+}]}

@@ -18,6 +18,7 @@ public class Cafe {
     private List<Prestamo> historialPrestamos = new ArrayList<>();
     private List<SolicitudCambioTurno> solicitudesCambioTurno = new ArrayList<>();
     private List<SugerenciaPlatillo> sugerencias = new ArrayList<>();
+    private List<Torneo> torneos = new ArrayList<>();
 
 
 
@@ -173,5 +174,8 @@ public class Cafe {
             }
         }
         return resultado;
+    }
+    public void agregarTorneo(Torneo t) {
+    	torneos.add(t);
     }
 }

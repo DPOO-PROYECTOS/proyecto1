@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CafeLogica {
 
@@ -216,7 +217,7 @@ public class CafeLogica {
 
     public VentaCafeteria realizarPedidoCafe(Usuario usuario, Mesa mesa,
                                               List<ItemMenu> items, double propina,
-                                              double puntosAUsar) {
+                                              double puntosAUsar, boolean usarBono) {
         if (usuario instanceof Admin)
             throw new IllegalStateException("El administrador no puede realizar pedidos.");
         if (items == null || items.isEmpty())
@@ -245,6 +246,21 @@ public class CafeLogica {
             if (!((Cliente) usuario).usarPuntos(puntosAUsar))
                 throw new IllegalStateException("Puntos insuficientes. Disponibles: " + ((Cliente) usuario).getPuntosFidelidad());
         }
+        if (usarBono) {
+            if (!usuario.getTieneBonoTorneoAmistoso()) {
+                throw new IllegalStateException("No tienes ningún bono de torneo disponible.");
+            }
+            if (puntosAUsar > 0 || (usuario instanceof Empleado)) {
+                throw new IllegalStateException("El bono de torneo no es acumulable con puntos o descuentos de empleado."); 
+            }
+            
+            usuario.setTieneBonoTorneoAmistoso(false); 
+            venta.aplicarDescuentoTorneo();
+            
+            
+            // venta.aplicarDescuentoTorneo();
+            System.out.println("se ha aplicado tu bono de torneo amistoso");
+        }
 
         for (ItemMenu item : items) {
             if (item instanceof Bebida) {
@@ -262,7 +278,7 @@ public class CafeLogica {
     // ventas juego
 
     public VentaJuego venderJuegos(Usuario usuario, List<JuegoDeMesa> juegos,
-                                    String codigoDescuento, double puntosAUsar) {
+                                    String codigoDescuento, double puntosAUsar, boolean usarBono) {
         if (usuario instanceof Admin)
             throw new IllegalStateException("El administrador no puede realizar compras.");
         if (juegos == null || juegos.isEmpty())
@@ -289,6 +305,20 @@ public class CafeLogica {
             if (!((Cliente) usuario).usarPuntos(puntosAUsar))
                 throw new IllegalStateException("Puntos insuficientes. Disponibles: " + ((Cliente) usuario).getPuntosFidelidad());
         }
+        if (usarBono) {
+            if (!usuario.getTieneBonoTorneoAmistoso()) {
+                throw new IllegalStateException("No tienes ningún bono de torneo disponible.");
+            }
+            if (puntosAUsar > 0 || (codigoDescuento != null && !codigoDescuento.isBlank())) {
+                throw new IllegalStateException("El bono de torneo no es acumulable con otros descuentos."); 
+            }
+            
+            usuario.setTieneBonoTorneoAmistoso(false); 
+            venta.aplicarDescuentoTorneo();
+
+            System.out.println("Se ha aplicado bono de torneo amistoso a la compra de juegos");
+        }
+        
 
         for (JuegoDeMesa juego : juegos) {
             cafe.getInventarioVenta().quitarJuego(juego);
@@ -671,4 +701,117 @@ public class CafeLogica {
             }
         }
     }
+   //TORNEOOSSSS
+    private void crearTorneo(Usuario creador, JuegoDeMesa juego, String diaSemana, int maxParticipantes, String tipo) {
+    	if (!(creador instanceof Admin)) {
+    		throw new IllegalStateException("Lo sentimos, solamente el administrador puede crear torneos");
+    	}
+    	Torneo nuevoTorneo= null;
+    	if (tipo.equalsIgnoreCase("Amistoso")) {
+    		nuevoTorneo= new TorneoAmistoso (juego, diaSemana, maxParticipantes);
+    	}else if (tipo.equalsIgnoreCase("Competitivo")) {
+    		double tarifa= 10000.0;
+    		nuevoTorneo = new TorneoCompetitivo(juego, diaSemana, maxParticipantes, tarifa);
+    	} else {
+    		throw new IllegalArgumentException("Tipo de torneo inválido, Debe ser Amistoso o competitivo");
+    	}
+    	
+    	cafe.agregarTorneo(nuevoTorneo);
+    }
+    private void inscribirEnTorneo(Usuario jugador, Torneo torneo, int cuposComprados) {
+    	int cuposActuales = torneo.getInscripciones().getOrDefault(jugador, 0);
+    	if (cuposActuales+ cuposComprados>3) {
+    		throw new IllegalArgumentException("No se puede inscribir más de 3 participantes por usuario.");
+    	}
+    	if (jugador instanceof Empleado) {
+    		Empleado emp= (Empleado) jugador;
+    		List<Turno> turnos= getTurnosDeEmpleado(emp);
+    		for (Turno t: turnos) {
+    			if (t.getDia().equalsIgnoreCase(torneo.getDiaSemana())) {
+    				throw new IllegalArgumentException("Los empleados no pueden inscribirse, a trabajar esclavo");
+    			}
+    		}
+    	}
+    	
+    	boolean esFanatico=jugador.esFavorito(torneo.getJuego());
+    	int cuposAsignados=0;
+    	
+    	for (int i=0; i< cuposComprados; i++) {
+    		if (esFanatico && torneo.getCuposFanaticosRestantes()>0) {
+    			torneo.setCuposFanaticosRestantes(torneo.getCuposFanaticosRestantes()-1);
+    			cuposAsignados++;
+    		} else if(torneo.getCuposDisponibles()>0){
+    			torneo.setCuposDisponibles(torneo.getCuposDisponibles()-1);
+    			cuposAsignados++;
+    			
+    		}else {
+    			throw new IllegalStateException("No hay suficientes cupos disponibles en el momento");
+    		}
+    		
+    	}
+    	
+    	if (torneo instanceof TorneoCompetitivo) {
+    		TorneoCompetitivo tc=(TorneoCompetitivo) torneo;
+    		if (!(jugador instanceof Empleado)) {
+    			double totalAPagar=tc.getTarifaEntrada()*cuposAsignados;
+    			tc.sumarAlPozo(totalAPagar);
+    			System.out.println("Se ha cobrado una entrada de: "+ totalAPagar);
+    		}else {
+    			System.out.println("Entrada gratis por ser empleado");
+    		}
+    	}
+    	
+    	torneo.getInscripciones().put(jugador, cuposActuales+cuposComprados);
+    	System.out.println("Cupos comprados: "+ cuposComprados);
+    	
+    	}
+    
+    public void desinscribirTorneo(Usuario jugador, Torneo torneo) {
+    	Map<Usuario, Integer> inscripciones= torneo.getInscripciones();
+    	if (!inscripciones.containsKey(jugador)) {
+    		throw new IllegalArgumentException ("El usuario no está inscrito a ningún torneo");
+    	}
+    	int cuposDevueltos= inscripciones.get(jugador);
+    	
+    	torneo.setCuposDisponibles(torneo.getCuposDisponibles()*cuposDevueltos);
+    	
+    	if (torneo instanceof TorneoCompetitivo && !(jugador instanceof Empleado)) {
+    		TorneoCompetitivo tc= (TorneoCompetitivo) torneo;
+    		double plataDevuelta= tc.getTarifaEntrada()*cuposDevueltos;
+    		
+    		tc.sumarAlPozo(tc.getPremioAcumulado()-plataDevuelta);
+    	}
+    	inscripciones.remove(jugador);
+    	System.out.println("Desinscripción exitosa, cupos devueltos: "+ cuposDevueltos);
+    	    	
+    }
+    
+    public void premiarGanador(Usuario ganador, Torneo torneo) {
+    	if (torneo instanceof TorneoAmistoso) {
+    		ganador.setTieneBonoTorneoAmistoso(true);
+    		System.out.println("Gana torneo amistoso, se aplica bono al siguiente juego");
+    	}else if (torneo instanceof TorneoCompetitivo) {
+    		TorneoCompetitivo tc= (TorneoCompetitivo) torneo;
+    		if (ganador instanceof Empleado) {
+    			System.out.println("Los ESCLAVOS no reciben premio");
+    		} else {
+    			System.out.println("Ganaste: "+ tc.getPremioAcumulado());
+    		}
+    		
+    	}
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

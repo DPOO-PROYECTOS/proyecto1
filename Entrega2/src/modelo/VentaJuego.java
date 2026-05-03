@@ -24,7 +24,12 @@ public class VentaJuego extends Venta {
     public double calcularTotal() {
         double subtotal = calcularSubtotal();
         double descuento = calcularDescuento(subtotal);
-        return (subtotal - descuento) * (1 + IVA);
+        double total = (subtotal - descuento) * (1 + IVA);
+        
+        if (this.descuentoTorneoAplicado) {
+        	total= total*0.67;
+        }
+        return total;
     }
 
 

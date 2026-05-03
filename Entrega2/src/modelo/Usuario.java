@@ -9,6 +9,7 @@ public class Usuario {
     private String login;
     private String password;
     private List<JuegoDeMesa> favoritos = new ArrayList<>();
+    private boolean tieneBonoTorneoAmistoso;
 
 
 
@@ -21,6 +22,8 @@ public class Usuario {
 
 
     // Methods
+    public boolean getTieneBonoTorneoAmistoso() {return this.tieneBonoTorneoAmistoso;}
+    public void setTieneBonoTorneoAmistoso(boolean t) {this.tieneBonoTorneoAmistoso=t;}
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
 

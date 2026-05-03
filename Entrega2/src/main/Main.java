@@ -3,50 +3,62 @@ package main;
 import modelo.*;
 import logica.CafeLogica;
 import persistencia.CentralPersistencia;
+import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) {
-
         Cafe cafe = new Cafe("DulcesnDados", 50);
         CafeLogica logica = new CafeLogica(cafe);
 
-        logica.registrarAdmin("admin", "1234");
-        logica.registrarEmpleado("mesero1", "pass1", "mesero");
-        logica.registrarEmpleado("mesero2", "pass2", "mesero");
-        logica.registrarEmpleado("cocinero1", "pass3", "cocinero");
-        logica.registrarCliente("cliente1", "c123");
-        logica.registrarCliente("cliente2", "c123");
+        File carpeta = new File("data");
+        if (!carpeta.exists()) {
+            carpeta.mkdir();
+        }
 
-        logica.agregarMesa(new Mesa(1, 2));
-        logica.agregarMesa(new Mesa(2, 2));
-        logica.agregarMesa(new Mesa(3, 4));
-        logica.agregarMesa(new Mesa(4, 6));
+        String pathU = "./data/usuarios.json";
+        String pathI = "./data/inventario.json";
+        String pathM = "./data/menu.json";
+        String pathMe = "./data/mesas.json";
 
-        JuegoDeMesa catan = new JuegoTablero("Catan", 1995, "Devir", 3, 4, false, false, "Excelente", true);
-        logica.agregarJuegoInventarioPrestamo(catan);
+        File archivoPrueba = new File(pathU);
+        if (archivoPrueba.exists()) {
+            System.out.println("Probando carga");
+            try {
+                CentralPersistencia.cargarTodo(cafe, pathU, pathI, pathM, pathMe);
+                System.out.println("exitoso. Usuarios cargados: " + cafe.getUsuarios().size());
+            } catch (Exception e) {
+                System.out.println("ERROR" + e.getMessage());
+            }
+        } else {
+            System.out.println("No se encuentran archivos, se inicializan datos por defecto");
+            inicializarDatos(logica);
+        }
 
-        JuegoDeMesa jenga = new JuegoDeAccion("Jenga", 1983, "Hasbro", 2, 8, true, false, "Bueno", true);
-        logica.agregarJuegoInventarioPrestamo(jenga);
+        System.out.println("Ejecuta lógica del negocio");
+        System.out.println("Estado actual del inventario: " + cafe.getInventarioPrestamo().getJuegos().size() + " juegos.");
 
-        JuegoDeMesa gloomhaven = new JuegoDificil("Gloomhaven", 2017, "Cephalofair", 1, 4, false, true, "Nuevo", true);
-        logica.agregarJuegoInventarioPrestamo(gloomhaven);
-
-        logica.agregarItemMenu(new Bebida("Cafe Latte", 4500, false, true));
-        logica.agregarItemMenu(new Bebida("Cerveza Artesanal", 8000, true, false));
-        logica.agregarItemMenu(new Bebida("Limonada", 3500, false, false));
-
-        Pasteleria brownie = new Pasteleria("Brownie", 5000);
-        brownie.agregarAlergeno("Nueces");
-        brownie.agregarAlergeno("Gluten");
-        logica.agregarItemMenu(brownie);
-
+        System.out.println("Intento guardar cambios");
         try {
-            CentralPersistencia.guardarTodo(cafe, "data/usuarios.json","data/inventario.json","data/menu.json","data/mesas.json");
-
-            System.out.println("Archivos generados correctamente");
+            CentralPersistencia.guardarTodo(cafe, pathU, pathI, pathM, pathMe);
+            System.out.println("Se guardó exitosamente en en la carpeta /data");
         } catch (Exception e) {
-            System.out.println("Error guardando: " + e.getMessage());
+            System.out.println("error al guardar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
+    private static void inicializarDatos(CafeLogica logica) {
+        logica.registrarAdmin("admin", "1234");
+        logica.registrarEmpleado("mesero1", "pass1", "mesero");
+        logica.agregarMesa(new Mesa(1, 2));
+        logica.agregarMesa(new Mesa(2, 4));
+        logica.agregarJuegoInventarioPrestamo(new JuegoTablero("Catan", 1995, "Devir", 3, 4, false, false, "Excelente", true));
+        logica.agregarItemMenu(new Bebida("Cafe Latte", 4500, false, true));
+    }
+    
+    
+    
+    
+    
 }

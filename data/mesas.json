@@ -11,20 +11,6 @@
     "tieneNinos": false,
     "numero": 2,
     "tieneJovenes": false,
-    "capacidad": 2
-  },
-  {
-    "numPersonas": 0,
-    "tieneNinos": false,
-    "numero": 3,
-    "tieneJovenes": false,
     "capacidad": 4
-  },
-  {
-    "numPersonas": 0,
-    "tieneNinos": false,
-    "numero": 4,
-    "tieneJovenes": false,
-    "capacidad": 6
   }
 ]}

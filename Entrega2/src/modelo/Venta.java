@@ -11,6 +11,7 @@ public abstract class Venta {
     private Usuario usuario;
     private Empleado empleadoDescuento;
     private List<LineaVenta> lineas = new ArrayList<>();
+    protected boolean descuentoTorneoAplicado= false;
 
 
 
@@ -23,6 +24,9 @@ public abstract class Venta {
 
 
     // Mehtods
+    public void aplicarDescuentoTorneo() {
+    	this.descuentoTorneoAplicado= true;
+    }
     public LocalDateTime getFecha() { return fecha; }
     public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
