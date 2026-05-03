@@ -1,5 +1,12 @@
-{"usuarios": [{
-  "password": "1234",
-  "tipo": "Admin",
-  "login": "admin"
-}]}
+{"usuarios": [
+  {
+    "password": "1234",
+    "tipo": "Admin",
+    "login": "admin"
+  },
+  {
+    "password": "1234",
+    "tipo": "Cliente",
+    "login": "Sebitas"
+  }
+]}

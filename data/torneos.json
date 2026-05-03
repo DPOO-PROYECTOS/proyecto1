@@ -11,8 +11,11 @@
   {
     "diaSemana": "Lunes",
     "tipo": "TorneoAmistoso",
-    "inscripciones": [],
-    "cuposDisponibles": 8,
+    "inscripciones": [{
+      "cupos": 3,
+      "login": "Sebitas"
+    }],
+    "cuposDisponibles": 5,
     "cuposFanaticosRestantes": 2,
     "maxParticipantes": 10,
     "juego": "Catan"

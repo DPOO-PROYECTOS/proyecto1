@@ -1,30 +1,14 @@
-{"inventarioVenta": [
-  {
-    "minJugadores": 2,
-    "empresaMatriz": "Hasbro",
-    "estado": "Regular",
-    "tipo": "JuegoDeAccion",
-    "aptaMenores5": true,
-    "vecesPrestado": 0,
-    "anioPublicacion": 1965,
-    "maxJugadores": 6,
-    "precioVenta": 8.65,
-    "nombre": "Operación",
-    "soloAdultos": false,
-    "disponible": false
-  },
-  {
-    "minJugadores": 2,
-    "empresaMatriz": "Z-Man Games",
-    "estado": "Nuevo",
-    "tipo": "JuegoDificil",
-    "aptaMenores5": false,
-    "vecesPrestado": 0,
-    "anioPublicacion": 2015,
-    "maxJugadores": 4,
-    "precioVenta": 10.65,
-    "nombre": "Pandemic Legacy",
-    "soloAdultos": true,
-    "disponible": true
-  }
-]}
+{"inventarioVenta": [{
+  "minJugadores": 2,
+  "empresaMatriz": "Hasbro",
+  "estado": "Regular",
+  "tipo": "JuegoDeAccion",
+  "aptaMenores5": true,
+  "vecesPrestado": 0,
+  "anioPublicacion": 1965,
+  "maxJugadores": 6,
+  "precioVenta": 8.65,
+  "nombre": "Operación",
+  "soloAdultos": false,
+  "disponible": false
+}]}
