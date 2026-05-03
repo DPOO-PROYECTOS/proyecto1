@@ -1,0 +1,44 @@
+{"inventarioVenta": [
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Days of Wonder",
+    "estado": "Bueno",
+    "tipo": "JuegoTablero",
+    "aptaMenores5": false,
+    "vecesPrestado": 0,
+    "anioPublicacion": 2004,
+    "maxJugadores": 5,
+    "precioVenta": 5,
+    "nombre": "Ticket to Ride",
+    "soloAdultos": false,
+    "disponible": true
+  },
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Hasbro",
+    "estado": "Regular",
+    "tipo": "JuegoDeAccion",
+    "aptaMenores5": true,
+    "vecesPrestado": 0,
+    "anioPublicacion": 1965,
+    "maxJugadores": 6,
+    "precioVenta": 8.65,
+    "nombre": "Operación",
+    "soloAdultos": false,
+    "disponible": false
+  },
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Z-Man Games",
+    "estado": "Nuevo",
+    "tipo": "JuegoDificil",
+    "aptaMenores5": false,
+    "vecesPrestado": 0,
+    "anioPublicacion": 2015,
+    "maxJugadores": 4,
+    "precioVenta": 10.65,
+    "nombre": "Pandemic Legacy",
+    "soloAdultos": true,
+    "disponible": true
+  }
+]}

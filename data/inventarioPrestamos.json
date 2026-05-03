@@ -1,0 +1,44 @@
+{"inventarioPrestamo": [
+  {
+    "minJugadores": 3,
+    "empresaMatriz": "Devir",
+    "estado": "Excelente",
+    "tipo": "JuegoTablero",
+    "aptaMenores5": false,
+    "vecesPrestado": 0,
+    "anioPublicacion": 1995,
+    "maxJugadores": 4,
+    "precioVenta": 0,
+    "nombre": "Catan",
+    "soloAdultos": false,
+    "disponible": true
+  },
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Hasbro",
+    "estado": "Bueno",
+    "tipo": "JuegoDeAccion",
+    "aptaMenores5": true,
+    "vecesPrestado": 0,
+    "anioPublicacion": 1983,
+    "maxJugadores": 8,
+    "precioVenta": 0,
+    "nombre": "Jenga",
+    "soloAdultos": false,
+    "disponible": true
+  },
+  {
+    "minJugadores": 1,
+    "empresaMatriz": "Cephalofair",
+    "estado": "Nuevo",
+    "tipo": "JuegoDificil",
+    "aptaMenores5": false,
+    "vecesPrestado": 0,
+    "anioPublicacion": 2017,
+    "maxJugadores": 4,
+    "precioVenta": 0,
+    "nombre": "Gloomhaven",
+    "soloAdultos": true,
+    "disponible": true
+  }
+]}

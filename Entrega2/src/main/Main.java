@@ -1,64 +1,60 @@
+
+
 package main;
 
 import modelo.*;
 import logica.CafeLogica;
 import persistencia.CentralPersistencia;
-import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) {
+
         Cafe cafe = new Cafe("DulcesnDados", 50);
         CafeLogica logica = new CafeLogica(cafe);
 
-        File carpeta = new File("data");
-        if (!carpeta.exists()) {
-            carpeta.mkdir();
-        }
-
-        String pathU = "./data/usuarios.json";
-        String pathI = "./data/inventario.json";
-        String pathM = "./data/menu.json";
-        String pathMe = "./data/mesas.json";
-
-        File archivoPrueba = new File(pathU);
-        if (archivoPrueba.exists()) {
-            System.out.println("Probando carga");
-            try {
-                CentralPersistencia.cargarTodo(cafe, pathU, pathI, pathM, pathMe);
-                System.out.println("exitoso. Usuarios cargados: " + cafe.getUsuarios().size());
-            } catch (Exception e) {
-                System.out.println("ERROR" + e.getMessage());
-            }
-        } else {
-            System.out.println("No se encuentran archivos, se inicializan datos por defecto");
-            inicializarDatos(logica);
-        }
-
-        System.out.println("Ejecuta lógica del negocio");
-        System.out.println("Estado actual del inventario: " + cafe.getInventarioPrestamo().getJuegos().size() + " juegos.");
-
-        System.out.println("Intento guardar cambios");
-        try {
-            CentralPersistencia.guardarTodo(cafe, pathU, pathI, pathM, pathMe);
-            System.out.println("Se guardó exitosamente en en la carpeta /data");
-        } catch (Exception e) {
-            System.out.println("error al guardar: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static void inicializarDatos(CafeLogica logica) {
         logica.registrarAdmin("admin", "1234");
         logica.registrarEmpleado("mesero1", "pass1", "mesero");
+        logica.registrarEmpleado("mesero2", "pass2", "mesero");
+        logica.registrarEmpleado("cocinero1", "pass3", "cocinero");
+        logica.registrarCliente("cliente1", "c123");
+        logica.registrarCliente("cliente2", "c123");
+
         logica.agregarMesa(new Mesa(1, 2));
-        logica.agregarMesa(new Mesa(2, 4));
-        logica.agregarJuegoInventarioPrestamo(new JuegoTablero("Catan", 1995, "Devir", 3, 4, false, false, "Excelente", true));
+        logica.agregarMesa(new Mesa(2, 2));
+        logica.agregarMesa(new Mesa(3, 4));
+        logica.agregarMesa(new Mesa(4, 6));
+
+        JuegoDeMesa catan = new JuegoTablero("Catan", 1995, "Devir", 3, 4, false, false, "Excelente", true);
+        logica.agregarJuegoInventarioPrestamo(catan);
+        JuegoDeMesa jenga = new JuegoDeAccion("Jenga", 1983, "Hasbro", 2, 8, true, false, "Bueno", true);
+        logica.agregarJuegoInventarioPrestamo(jenga);
+        JuegoDeMesa gloomhaven = new JuegoDificil("Gloomhaven", 2017, "Cephalofair", 1, 4, false, true, "Nuevo", true);
+        logica.agregarJuegoInventarioPrestamo(gloomhaven);
+        
+        JuegoDeMesa ticketToRide = new JuegoTablero("Ticket to Ride", 2004, "Days of Wonder", 2, 5, false, false, "Bueno", true);
+        logica.agregarJuegoInventarioVenta(ticketToRide, 5.00);
+        JuegoDeMesa operacion = new JuegoDeAccion("Operación", 1965, "Hasbro", 2, 6, true, false, "Regular", false);
+        logica.agregarJuegoInventarioVenta(operacion, 8.65);
+        JuegoDeMesa pandemicLegacy = new JuegoDificil("Pandemic Legacy", 2015, "Z-Man Games", 2, 4, false, true, "Nuevo", true);
+        logica.agregarJuegoInventarioVenta(pandemicLegacy, 10.65);
+
         logica.agregarItemMenu(new Bebida("Cafe Latte", 4500, false, true));
+        logica.agregarItemMenu(new Bebida("Cerveza Artesanal", 8000, true, false));
+        logica.agregarItemMenu(new Bebida("Limonada", 3500, false, false));
+
+        Pasteleria brownie = new Pasteleria("Brownie", 5000);
+        brownie.agregarAlergeno("Nueces");
+        brownie.agregarAlergeno("Gluten");
+        logica.agregarItemMenu(brownie);
+
+        try {
+            CentralPersistencia.guardarTodo(cafe, "data/usuarios.json","data/inventarioPrestamos.json","data/menu.json","data/mesas.json", "data/inventarioVentas.json");
+
+            System.out.println("Archivos generados correctamente");
+        } catch (Exception e) {
+            System.out.println("Error guardando: " + e.getMessage());
+        }
     }
-    
-    
-    
-    
-    
+
 }

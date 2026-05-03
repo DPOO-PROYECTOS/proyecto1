@@ -17,9 +17,9 @@ import modelo.JuegoDeAccion;
 import modelo.JuegoDeCartas;
 import modelo.JuegoTablero;
 
-public class PersistenciaInventario {
+public class PersistenciaInventarioPrestamo {
 
-    public void cargarInventario(Cafe cafe, String archivo) throws IOException, JSONException {
+    public void cargarInventarioPrestamo(Cafe cafe, String archivo) throws IOException, JSONException {
         File f = new File(archivo);
         if (!f.exists()) return; 
 
@@ -65,7 +65,7 @@ public class PersistenciaInventario {
         }
         return null;
     }
-    public void salvarInventario(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
+    public void salvarInventarioPrestamo(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jPrestamo = new JSONArray();
         
         for (JuegoDeMesa juego : cafe.getInventarioPrestamo().getJuegos()) {
