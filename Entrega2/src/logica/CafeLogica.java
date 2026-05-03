@@ -702,7 +702,7 @@ public class CafeLogica {
         }
     }
    //TORNEOOSSSS
-    private void crearTorneo(Usuario creador, JuegoDeMesa juego, String diaSemana, int maxParticipantes, String tipo) {
+    public void crearTorneo(Usuario creador, JuegoDeMesa juego, String diaSemana, int maxParticipantes, String tipo) {
     	if (!(creador instanceof Admin)) {
     		throw new IllegalStateException("Lo sentimos, solamente el administrador puede crear torneos");
     	}
@@ -718,7 +718,7 @@ public class CafeLogica {
     	
     	cafe.agregarTorneo(nuevoTorneo);
     }
-    private void inscribirEnTorneo(Usuario jugador, Torneo torneo, int cuposComprados) {
+    public void inscribirEnTorneo(Usuario jugador, Torneo torneo, int cuposComprados) {
     	int cuposActuales = torneo.getInscripciones().getOrDefault(jugador, 0);
     	if (cuposActuales+ cuposComprados>3) {
     		throw new IllegalArgumentException("No se puede inscribir más de 3 participantes por usuario.");

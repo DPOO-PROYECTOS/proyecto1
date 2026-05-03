@@ -178,4 +178,7 @@ public class Cafe {
     public void agregarTorneo(Torneo t) {
     	torneos.add(t);
     }
+    public List<Torneo> getTorneos() {
+    	return this.torneos;
+    }
 }
