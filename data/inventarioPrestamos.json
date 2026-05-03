@@ -40,5 +40,19 @@
     "nombre": "Gloomhaven",
     "soloAdultos": true,
     "disponible": true
+  },
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Days of Wonder",
+    "estado": "Destapado/Usado",
+    "tipo": "JuegoTablero",
+    "aptaMenores5": false,
+    "vecesPrestado": 0,
+    "anioPublicacion": 2004,
+    "maxJugadores": 5,
+    "precioVenta": 5,
+    "nombre": "Ticket to Ride",
+    "soloAdultos": false,
+    "disponible": true
   }
 ]}

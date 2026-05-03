@@ -1,9 +1,20 @@
-{"torneos": [{
-  "diaSemana": "Lunes",
-  "tipo": "TorneoAmistoso",
-  "inscripciones": [],
-  "cuposDisponibles": 8,
-  "cuposFanaticosRestantes": 2,
-  "maxParticipantes": 10,
-  "juego": "Ticket to Ride"
-}]}
+{"torneos": [
+  {
+    "diaSemana": "Lunes",
+    "tipo": "TorneoAmistoso",
+    "inscripciones": [],
+    "cuposDisponibles": 8,
+    "cuposFanaticosRestantes": 2,
+    "maxParticipantes": 10,
+    "juego": "Ticket to Ride"
+  },
+  {
+    "diaSemana": "Lunes",
+    "tipo": "TorneoAmistoso",
+    "inscripciones": [],
+    "cuposDisponibles": 8,
+    "cuposFanaticosRestantes": 2,
+    "maxParticipantes": 10,
+    "juego": "Catan"
+  }
+]}

@@ -20,12 +20,18 @@ public class MainAdmin {
 		}
 		if (cafe.getUsuarios().isEmpty()) {
 			logica.registrarAdmin("admin", "1234");
-			System.out.println("Se creó un usuario automatico");
-			if (cafe.getInventarioVenta().getJuegos().isEmpty()) {
-			JuegoDeMesa juegoPrueba= new JuegoTablero("Catan", 1995,"Devir", 3, 4, false, false, "Bueno", true);
-			logica.agregarJuegoInventarioVenta(juegoPrueba, 100000.0);
+			System.out.println("Se creó un admin por defecto");
 			
-		}
+			if (cafe.getInventarioVenta().getJuegos().isEmpty()) {
+			    
+			    JuegoDeMesa juegoVenta = new JuegoTablero("Catan", 1995,"Devir", 3, 4, false, false, "Nuevo", true);
+			    logica.agregarJuegoInventarioVenta(juegoVenta, 100000.0);
+			    
+			    
+			    JuegoDeMesa juegoPrestamo = new JuegoTablero("Ticket to Ride", 2004,"Days of Wonder", 2, 5, true, false, "Desgastado", true);
+			    cafe.getInventarioPrestamo().agregarJuego(juegoPrestamo); 
+			}
+		
 		}
 		System.out.println("MODULO ADMINISTRACION");
 		
@@ -46,8 +52,10 @@ public class MainAdmin {
 		while (!salir) {
 			System.out.println("\n MENÚ PRINCIPAL ");
             System.out.println("1. Crear un Torneo");
-            System.out.println("2. Ver catálogo de juegos");
-            System.out.println("3. Salir y Guardar");
+            System.out.println("2. Ver catálogo de juegos (Venta)");
+            System.out.println("3. Ver catálogo de juegos (Prestamo)");
+            System.out.println("4. Mover de venta a prestamo (se destapa)");
+            System.out.println("5 salir y guardar");
             System.out.print("Seleccione una opción: ");
             
 			String opcion = scanner.nextLine();
@@ -60,7 +68,7 @@ public class MainAdmin {
 					System.out.print("Ingrese NOMBRE DEL JUEGO: ");
 					String nombreJuego = scanner.nextLine();
 					JuegoDeMesa juegoEncontrado= null;
-					for (JuegoDeMesa j: cafe.getInventarioVenta().getJuegos()) {
+					for (JuegoDeMesa j: cafe.getInventarioPrestamo().getJuegos()) {
 						if (j.getNombre().equalsIgnoreCase(nombreJuego)) {
 							juegoEncontrado=j;
 							break;
@@ -101,7 +109,7 @@ public class MainAdmin {
 					}
 					
 					break;
-				case "3":
+				case "5":
 					salir= true;
 					try {
 					    System.out.println("\nGuardando datos en los archivos...");
@@ -111,6 +119,51 @@ public class MainAdmin {
 					}
 					System.out.println("Chao");
 					break;
+				case "3":
+					System.out.println("Juegos Disponibles (Prestamo)");
+					if (cafe.getInventarioPrestamo().getJuegos().isEmpty()) {
+						System.out.println("No hay juegos papu en prestamos :v");
+					}else {
+						for (JuegoDeMesa j: cafe.getInventarioPrestamo().getJuegos()) {
+							System.out.println("-"+ j.getNombre());
+						}
+					}
+					
+					break;
+				case "4":
+					System.out.println("Mover juego de venta a prestamo");
+					if (cafe.getInventarioVenta().getJuegos().isEmpty()) {
+						System.out.println("no hay juegos para vender");
+						break;
+					}
+					
+					System.out.println("Juegos disponibles en vitrina: ");
+					for (JuegoDeMesa j: cafe.getInventarioVenta().getJuegos()) {
+						System.out.println("- "+ j.getNombre());
+					}
+					
+					System.out.println("Ingrese nombre del juego que desea mover (destapar)");
+					String nombreMover= scanner.nextLine();
+					
+					JuegoDeMesa juegoAMover= null;
+					for (JuegoDeMesa j: cafe.getInventarioVenta().getJuegos()) {
+						if(j.getNombre().equalsIgnoreCase(nombreMover)) {
+							juegoAMover=j;
+							break;
+						}
+					}
+					if (juegoAMover== null) {
+						System.out.println("EL juego no existe");
+						break;
+					}
+					cafe.getInventarioVenta().getJuegos().remove(juegoAMover);
+					juegoAMover.setEstado("Destapado/Usado");
+					
+					cafe.getInventarioPrestamo().getJuegos().add(juegoAMover);
+					
+					System.out.println("El juego se ha movido.");
+					break;
+					
 				default:
 					System.out.println("opcion invalidad, digite 1 2 o 3");	
 			

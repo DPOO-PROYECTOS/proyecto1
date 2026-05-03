@@ -20,7 +20,7 @@ import modelo.Usuario;
 
 public class PersistenciaTorneo {
 
-    public void cargarTorneos(Cafe cafe, String archivo) throws IOException, JSONException {
+	public void cargarTorneos(Cafe cafe, String archivo) throws IOException, JSONException {
         File f = new File(archivo);
         if (!f.exists()) return; 
 
@@ -37,7 +37,7 @@ public class PersistenciaTorneo {
                 String nombreJuego = jTorneo.getString("juego");
                 String tipo = jTorneo.getString("tipo");
 
-                // Buscar el juego original en el inventario del café
+                // 1. BUSCAR EN VENTA
                 JuegoDeMesa juegoEncontrado = null;
                 for (JuegoDeMesa j : cafe.getInventarioVenta().getJuegos()) {
                     if (j.getNombre().equalsIgnoreCase(nombreJuego)) {
@@ -46,16 +46,19 @@ public class PersistenciaTorneo {
                     }
                 }
 
+                // 2. SI NO ESTÁ EN VENTA, BUSCAR EN PRÉSTAMO
                 if (juegoEncontrado == null) {
-                    for (JuegoDeMesa j: cafe.getInventarioPrestamo().getJuegos()) {
-                    	if(j.getNombre().equalsIgnoreCase(nombreJuego)) {
-                    		juegoEncontrado= j;
-                    		break;
-                    	}
+                    for (JuegoDeMesa j : cafe.getInventarioPrestamo().getJuegos()) {
+                        if (j.getNombre().equalsIgnoreCase(nombreJuego)) {
+                            juegoEncontrado = j;
+                            break;
+                        }
                     }
-                	Torneo torneo = null;
-                    
-                    // torneo según su tipo
+                }
+
+                // 3. AHORA SÍ: SI SE ENCONTRÓ EN ALGÚN LADO, SE CREA EL TORNEO
+                if (juegoEncontrado != null) {
+                    Torneo torneo = null;
                     if (tipo.equals("TorneoAmistoso")) {
                         torneo = new TorneoAmistoso(juegoEncontrado, diaSemana, maxParticipantes);
                     } else if (tipo.equals("TorneoCompetitivo")) {
@@ -64,11 +67,9 @@ public class PersistenciaTorneo {
                     }
 
                     if (torneo != null) {
-                        //contadores de cupos
                         torneo.setCuposDisponibles(jTorneo.getInt("cuposDisponibles"));
                         torneo.setCuposFanaticosRestantes(jTorneo.getInt("cuposFanaticosRestantes"));
 
-                        // mapa de inscripciones
                         if (jTorneo.has("inscripciones")) {
                             JSONArray jInscritos = jTorneo.getJSONArray("inscripciones");
                             for (int k = 0; k < jInscritos.length(); k++) {
@@ -76,7 +77,6 @@ public class PersistenciaTorneo {
                                 String login = jInscripcion.getString("login");
                                 int cupos = jInscripcion.getInt("cupos");
 
-                                
                                 for (Usuario u : cafe.getUsuarios()) {
                                     if (u.getLogin().equals(login)) {
                                         torneo.getInscripciones().put(u, cupos);
@@ -85,14 +85,12 @@ public class PersistenciaTorneo {
                                 }
                             }
                         }
-                        
                         cafe.getTorneos().add(torneo);
                     }
                 }
             }
         }
     }
-
     public void salvarTorneos(Cafe cafe, JSONObject jobject, String archivo) throws IOException, JSONException {
         JSONArray jTorneos = new JSONArray();
         
