@@ -22,7 +22,7 @@ public class MainCliente {
 
 		try {
             System.out.println("Cargando base de datos del Café...");
-            persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+            persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
         } catch (Exception e) {
             System.out.println("Iniciando sistema en blanco (No se encontraron archivos).");
         }
@@ -413,7 +413,7 @@ public class MainCliente {
 					salir= true;
 					try {
 					    System.out.println("\nGuardando datos en los archivos...");
-					    persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+					    persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
 					} catch (Exception e) {
 					    System.out.println("Error guardando los datos: " + e.getMessage());
 					}

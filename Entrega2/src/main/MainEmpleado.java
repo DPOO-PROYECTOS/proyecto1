@@ -15,7 +15,7 @@ public class MainEmpleado {
 		
 		try {
             System.out.println("Cargando base de datos del Café...");
-            persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+            persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json","data/turnos.json");
         } catch (Exception e) {
             System.out.println("Iniciando sistema en blanco (No se encontraron archivos previos).");
         }
@@ -155,7 +155,7 @@ public class MainEmpleado {
                     
                    
                     if (mesaAtendida.estaDisponible()) {
-                        System.out.println(">>> Error: La mesa " + numMesa + " está vacía. Asigne un cliente primero.");
+                        System.out.println(" Error: La mesa " + numMesa + " está vacía. Asigne un cliente primero.");
                         break;
                     }
 
@@ -172,7 +172,7 @@ public class MainEmpleado {
                     }
 
                     if (itemEncontrado == null) {
-                        System.out.println(">>> Error: '" + nombreItem + "' no se encuentra en el menú del café.");
+                        System.out.println("Error: '" + nombreItem + "' no se encuentra en el menú del café.");
                         break;
                     }
 
@@ -192,7 +192,7 @@ public class MainEmpleado {
             		salir = true;
             		try {
             			System.out.println("Cerrando caja y guardando base de datos...");
-            			persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+            			persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
             		}	catch (Exception e) {
             			System.out.println("Error guardando los datos: "+e.getMessage());
             		}	

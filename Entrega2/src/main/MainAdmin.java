@@ -17,7 +17,7 @@ public class MainAdmin {
 		CafeLogica logica= new CafeLogica(cafe);
 		try {
 		    System.out.println("Cargando base de datos...");
-		    persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+		    persistencia.CentralPersistencia.cargarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
 		    System.out.println("Datos cargados correctamente.");
 		} catch (Exception e) {
 		    System.out.println("No se encontraron archivos previos o hubo un error. Se iniciará en blanco.");
@@ -57,7 +57,8 @@ public class MainAdmin {
             System.out.println("4. Mover de venta a préstamo (se destapa)");
             System.out.println("5. Registrar empleado");
             System.out.println("6. Agregar item al menú (Bebida / Pastelería)");
-            System.out.println("7. Salir y guardar");
+            System.out.println("7. Gestionar solicitudes de cambio de turno");
+            System.out.println("8. Salir y guardar");
             System.out.print("Seleccione una opción: ");
 
 			String opcion = scanner.nextLine();
@@ -242,10 +243,65 @@ public class MainAdmin {
 
 				// ─────────────────────────────────────────────────────────────
 				case "7":
+
+					System.out.println("\n--- GESTIÓN DE SOLICITUDES DE TURNO ---");
+					
+					java.util.List<modelo.SolicitudCambioTurno> pendientes = logica.getSolicitudesPendientes();
+					
+					if (pendientes.isEmpty()) {
+					    System.out.println(" No hay solicitudes de cambio de turno pendientes para revisar.");
+					    break;
+					}
+
+					System.out.println("Solicitudes pendientes:");
+					for (int i = 0; i < pendientes.size(); i++) {
+					    modelo.SolicitudCambioTurno sol = pendientes.get(i);
+					    String nombreCompa = (sol.getIntercambiarCon() != null) ? sol.getIntercambiarCon().getLogin() : "Nadie (Dejar turno libre)";
+					    
+					    System.out.println((i + 1) + ". Solicitante: " + sol.getSolicitante().getLogin() + 
+					                       " | Día: " + sol.getTurno().getDia() + 
+					                       " | Reemplazo: " + nombreCompa);
+					}
+
+					System.out.print("\nIngrese el NÚMERO de la solicitud a gestionar (o 0 para cancelar): ");
+					String numSolStr = scanner.nextLine();
+					int numSol = 0;
+					try {
+					    numSol = Integer.parseInt(numSolStr);
+					} catch (NumberFormatException e) {
+					    System.out.println("Error: Debe ingresar un número entero.");
+					    break;
+					}
+
+					if (numSol == 0 || numSol > pendientes.size()) {
+					    System.out.println(" Operación cancelada.");
+					    break;
+					}
+
+					modelo.SolicitudCambioTurno solicitudElegida = pendientes.get(numSol - 1);
+
+					System.out.print("¿Desea (A)probar o (R)echazar esta solicitud?: ");
+					String decision = scanner.nextLine();
+
+					try {
+					    if (decision.equalsIgnoreCase("A")) {
+					        logica.aprobarCambioTurno(adminLogueado, solicitudElegida);
+					        System.out.println("Solicitud aprobada con éxito. Turnos actualizados.");
+					    } else if (decision.equalsIgnoreCase("R")) {
+					        logica.rechazarCambioTurno(adminLogueado, solicitudElegida);
+					        System.out.println(" Solicitud rechazada.");
+					    } else {
+					        System.out.println(" Opción inválida. No se realizó ninguna acción.");
+					    }
+					} catch (Exception e) {
+					    System.out.println("Error al procesar la solicitud: " + e.getMessage());
+					}
+					break;
+				case "8":
 					salir= true;
 					try {
 					    System.out.println("\nGuardando datos en los archivos...");
-					    persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json");
+					    persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
 					} catch (Exception e) {
 					    System.out.println("Error guardando los datos: " + e.getMessage());
 					}
@@ -253,7 +309,7 @@ public class MainAdmin {
 					break;
 
 				default:
-					System.out.println("Opción inválida. Digite entre 1 y 7.");
+					System.out.println("Opción inválida. Digite entre 1 y 8.");
 			}
 		}
 		scanner.close();
