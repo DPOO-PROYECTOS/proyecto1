@@ -10,14 +10,15 @@ public class CentralPersistencia {
 
     public static void cargarTodo(Cafe cafe, String archivoUsuarios, String archivoInventarioPrestamo, String archivoMenu, String archivoMesas, String archivoInventarioVentas, String archivoTorneos, String archivoTurnos) throws IOException, JSONException {
 
-        PersistenciaUsuario pU = new PersistenciaUsuario();
-        pU.cargarUsuarios(cafe, archivoUsuarios);
-
+        // Inventarios primero: los usuarios referencian juegos como favoritos
         PersistenciaInventarioPrestamo pIP = new PersistenciaInventarioPrestamo();
         pIP.cargarInventarioPrestamo(cafe, archivoInventarioPrestamo);
-        
+
         PersistenciaInventarioVenta pIV = new PersistenciaInventarioVenta();
         pIV.cargarInventarioVenta(cafe, archivoInventarioVentas);
+
+        PersistenciaUsuario pU = new PersistenciaUsuario();
+        pU.cargarUsuarios(cafe, archivoUsuarios);
 
         PersistenciaMenu pM = new PersistenciaMenu();
         pM.cargarMenu(cafe, archivoMenu);
