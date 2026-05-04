@@ -7,6 +7,12 @@
   {
     "password": "1234",
     "tipo": "Cliente",
+    "tieneBonoTorneoAmistoso": false,
     "login": "Sebitas"
+  },
+  {
+    "password": "pass123",
+    "tipo": "Mesero",
+    "login": "NicoMesero"
   }
 ]}

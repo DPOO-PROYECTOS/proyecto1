@@ -2,8 +2,11 @@
   {
     "diaSemana": "Lunes",
     "tipo": "TorneoAmistoso",
-    "inscripciones": [],
-    "cuposDisponibles": 8,
+    "inscripciones": [{
+      "cupos": 1,
+      "login": "Sebitas"
+    }],
+    "cuposDisponibles": 7,
     "cuposFanaticosRestantes": 2,
     "maxParticipantes": 10,
     "juego": "Ticket to Ride"
@@ -19,5 +22,15 @@
     "cuposFanaticosRestantes": 2,
     "maxParticipantes": 10,
     "juego": "Catan"
+  },
+  {
+    "tarifa": 10000,
+    "diaSemana": "Lunes",
+    "tipo": "TorneoCompetitivo",
+    "inscripciones": [],
+    "cuposDisponibles": 8,
+    "cuposFanaticosRestantes": 2,
+    "maxParticipantes": 10,
+    "juego": "Operación"
   }
 ]}

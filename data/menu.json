@@ -1,7 +1,15 @@
-{"menu": [{
-  "esAlcoholica": false,
-  "precio": 4500,
-  "tipo": "Bebida",
-  "esCaliente": true,
-  "nombre": "Cafe Latte"
-}]}
+{"menu": [
+  {
+    "esAlcoholica": false,
+    "precio": 4500,
+    "tipo": "Bebida",
+    "esCaliente": true,
+    "nombre": "Cafe Latte"
+  },
+  {
+    "precio": 1000,
+    "tipo": "Pasteleria",
+    "alergenos": ["polen"],
+    "nombre": "Muffin de Chocolate"
+  }
+]}

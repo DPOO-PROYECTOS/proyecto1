@@ -54,5 +54,19 @@
     "nombre": "Ticket to Ride",
     "soloAdultos": false,
     "disponible": true
+  },
+  {
+    "minJugadores": 2,
+    "empresaMatriz": "Hasbro",
+    "estado": "Destapado/Usado",
+    "tipo": "JuegoDeAccion",
+    "aptaMenores5": true,
+    "vecesPrestado": 0,
+    "anioPublicacion": 1965,
+    "maxJugadores": 6,
+    "precioVenta": 8.65,
+    "nombre": "Operación",
+    "soloAdultos": false,
+    "disponible": false
   }
 ]}

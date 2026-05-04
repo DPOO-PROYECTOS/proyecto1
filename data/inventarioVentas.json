@@ -1,14 +1,1 @@
-{"inventarioVenta": [{
-  "minJugadores": 2,
-  "empresaMatriz": "Hasbro",
-  "estado": "Regular",
-  "tipo": "JuegoDeAccion",
-  "aptaMenores5": true,
-  "vecesPrestado": 0,
-  "anioPublicacion": 1965,
-  "maxJugadores": 6,
-  "precioVenta": 8.65,
-  "nombre": "Operación",
-  "soloAdultos": false,
-  "disponible": false
-}]}
+{"inventarioVenta": []}
