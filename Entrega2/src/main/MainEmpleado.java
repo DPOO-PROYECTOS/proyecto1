@@ -8,7 +8,7 @@ import modelo.Usuario;
 import java.util.List;
 import java.util.Scanner;
 public class MainEmpleado {
-	public static void maint(String[] args) {
+	public static void main(String[] args) {
 		Scanner scanner= new Scanner(System.in);
 		Cafe cafe= new Cafe("Uniandes Board", 100);
 		CafeLogica logica= new CafeLogica(cafe);
@@ -53,7 +53,8 @@ public class MainEmpleado {
             System.out.println("1. Ver mi horario / turnos asignados");
             System.out.println("2. Solicitar un cambio de turno a un compañero");
             System.out.println("3. Tomar pedido de una mesa (Solo Meseros)");
-            System.out.println("4. Salir y Guardar");
+            System.out.println("4. Sugerir un platillo al menú");
+            System.out.println("5. Salir y Guardar");
             System.out.print("Seleccione una opción: ");
             
             String opcion=scanner.nextLine();
@@ -188,18 +189,71 @@ public class MainEmpleado {
                         System.out.println("Error registrando el pedido: " + e.getMessage());
                     }
                     break;
+            	// ─── 4. SUGERIR PLATILLO ─────────────────────────────────────
             	case "4":
+            		System.out.println("\n--- Sugerir un Platillo al Menú ---");
+            		if (!(empleadoLogueado instanceof Empleado)) {
+            			System.out.println("Solo los empleados pueden sugerir platillos.");
+            			break;
+            		}
+            		Empleado empSugeridor = (Empleado) empleadoLogueado;
+            		System.out.println("  1. Bebida");
+            		System.out.println("  2. Pastelería");
+            		System.out.print("Tipo de item a sugerir: ");
+            		String tipoSug = scanner.nextLine();
+            		System.out.print("Nombre del item: ");
+            		String nombreSug = scanner.nextLine();
+            		System.out.print("Precio sugerido: ");
+            		double precioSug = 0;
+            		try { precioSug = Double.parseDouble(scanner.nextLine()); }
+            		catch (NumberFormatException e) { System.out.println("Precio inválido."); break; }
+            		modelo.ItemMenu itemSugerido;
+            		if (tipoSug.equals("1")) {
+            			System.out.print("¿Es alcohólica? (S/N): ");
+            			boolean esAlc = scanner.nextLine().equalsIgnoreCase("S");
+            			System.out.print("¿Es caliente? (S/N): ");
+            			boolean esCal = scanner.nextLine().equalsIgnoreCase("S");
+            			itemSugerido = new modelo.Bebida(nombreSug, precioSug, esAlc, esCal);
+            		} else if (tipoSug.equals("2")) {
+            			modelo.Pasteleria past = new modelo.Pasteleria(nombreSug, precioSug);
+            			System.out.print("¿Tiene alérgenos? (S/N): ");
+            			if (scanner.nextLine().equalsIgnoreCase("S")) {
+            				System.out.println("Ingrese alérgenos uno por uno (Enter vacío para terminar):");
+            				while (true) {
+            					System.out.print("  Alérgeno: ");
+            					String alg = scanner.nextLine().trim();
+            					if (alg.isEmpty()) break;
+            					past.agregarAlergeno(alg);
+            				}
+            			}
+            			itemSugerido = past;
+            		} else {
+            			System.out.println("Tipo inválido.");
+            			break;
+            		}
+            		System.out.print("Descripción/justificación de la sugerencia: ");
+            		String descSug = scanner.nextLine();
+            		try {
+            			logica.sugerirPlatillo(empSugeridor, descSug, itemSugerido);
+            			System.out.println("Sugerencia enviada al administrador para su revisión.");
+            		} catch (Exception e) {
+            			System.out.println("Error al enviar sugerencia: " + e.getMessage());
+            		}
+            		break;
+
+            	// ─── 5. SALIR Y GUARDAR ───────────────────────────────────────
+            	case "5":
             		salir = true;
             		try {
             			System.out.println("Cerrando caja y guardando base de datos...");
             			persistencia.CentralPersistencia.guardarTodo(cafe, "data/usuarios.json", "data/inventarioPrestamos.json", "data/menu.json", "data/mesas.json", "data/inventarioVentas.json", "data/torneos.json", "data/turnos.json");
-            		}	catch (Exception e) {
-            			System.out.println("Error guardando los datos: "+e.getMessage());
-            		}	
+            		} catch (Exception e) {
+            			System.out.println("Error guardando los datos: " + e.getMessage());
+            		}
             		break;
-            		
-            	default: 
-            		System.out.println("Opción invalida, digite un numero del 1 al 4");
+
+            	default:
+            		System.out.println("Opción invalida, digite un numero del 1 al 5");
             }
             
             

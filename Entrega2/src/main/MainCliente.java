@@ -88,7 +88,9 @@ public class MainCliente {
             System.out.println("4. Reservar / Gestionar Mesa");
             System.out.println("5. Solicitar juego en préstamo");
             System.out.println("6. Ordenar del Menú");
-            System.out.println("7. Salir y Guardar");
+            System.out.println("7. Desinscribirse de un Torneo");
+            System.out.println("8. Gestionar Favoritos");
+            System.out.println("9. Salir y Guardar");
             System.out.print("Seleccione una opción: ");
 
 			String opcion= scanner.nextLine();
@@ -408,8 +410,96 @@ public class MainCliente {
 					}
 					break;
 
-				// ─────────────────────────────────────────────────────────────
+				// ─── 7. DESINSCRIBIRSE DE TORNEO ────────────────────────────
 				case "7":
+					System.out.println("\n=== Desinscribirse de un Torneo ===");
+					if (cafe.getTorneos().isEmpty()) {
+						System.out.println("No hay torneos registrados.");
+						break;
+					}
+					System.out.println("Torneos en los que estás inscrito:");
+					List<Torneo> misInscripciones = new ArrayList<>();
+					for (Torneo t : cafe.getTorneos()) {
+						if (t.getInscripciones().containsKey(clienteLogueado)) {
+							misInscripciones.add(t);
+						}
+					}
+					if (misInscripciones.isEmpty()) {
+						System.out.println("No estás inscrito en ningún torneo.");
+						break;
+					}
+					for (int i = 0; i < misInscripciones.size(); i++) {
+						Torneo t = misInscripciones.get(i);
+						int cuposReservados = t.getInscripciones().get(clienteLogueado);
+						System.out.println("  " + (i + 1) + ". " + t.getJuego().getNombre() +
+								" | Día: " + t.getDiaSemana() +
+								" | Cupos reservados: " + cuposReservados);
+					}
+					System.out.print("Número del torneo a abandonar (0 para cancelar): ");
+					int numDesinsc = 0;
+					try { numDesinsc = Integer.parseInt(scanner.nextLine()); }
+					catch (NumberFormatException e) { System.out.println("Número inválido."); break; }
+					if (numDesinsc == 0 || numDesinsc > misInscripciones.size()) { System.out.println("Cancelado."); break; }
+					try {
+						logica.desinscribirTorneo(clienteLogueado, misInscripciones.get(numDesinsc - 1));
+						System.out.println("Desinscripción exitosa. Se liberaron todos tus cupos.");
+					} catch (Exception e) {
+						System.out.println("Error al desinscribirse: " + e.getMessage());
+					}
+					break;
+
+				// ─── 8. GESTIONAR FAVORITOS ──────────────────────────────────
+				case "8":
+					System.out.println("\n=== Gestionar Favoritos ===");
+					System.out.println("Tus juegos favoritos actuales:");
+					List<JuegoDeMesa> favoritos = clienteLogueado.getFavoritos();
+					if (favoritos.isEmpty()) {
+						System.out.println("  (ninguno)");
+					} else {
+						for (int i = 0; i < favoritos.size(); i++) {
+							System.out.println("  " + (i + 1) + ". " + favoritos.get(i).getNombre());
+						}
+					}
+					System.out.println("  1. Agregar un favorito");
+					System.out.println("  2. Quitar un favorito");
+					System.out.print("Opción: ");
+					String subOpcFav = scanner.nextLine();
+					if (subOpcFav.equals("1")) {
+						System.out.println("Juegos disponibles (préstamo y venta):");
+						List<JuegoDeMesa> todosJuegos = new ArrayList<>();
+						todosJuegos.addAll(cafe.getInventarioPrestamo().getJuegos());
+						todosJuegos.addAll(cafe.getInventarioVenta().getJuegos());
+						for (int i = 0; i < todosJuegos.size(); i++) {
+							System.out.println("  " + (i + 1) + ". " + todosJuegos.get(i).getNombre());
+						}
+						System.out.print("Número del juego a agregar: ");
+						int numFav = 0;
+						try { numFav = Integer.parseInt(scanner.nextLine()); }
+						catch (NumberFormatException e) { System.out.println("Número inválido."); break; }
+						if (numFav < 1 || numFav > todosJuegos.size()) { System.out.println("Opción fuera de rango."); break; }
+						try {
+							logica.agregarFavorito(clienteLogueado, todosJuegos.get(numFav - 1));
+							System.out.println("'" + todosJuegos.get(numFav - 1).getNombre() + "' agregado a favoritos.");
+						} catch (Exception e) {
+							System.out.println("Error: " + e.getMessage());
+						}
+					} else if (subOpcFav.equals("2")) {
+						if (favoritos.isEmpty()) { System.out.println("No tienes favoritos para quitar."); break; }
+						System.out.print("Número del favorito a quitar: ");
+						int numQuit = 0;
+						try { numQuit = Integer.parseInt(scanner.nextLine()); }
+						catch (NumberFormatException e) { System.out.println("Número inválido."); break; }
+						if (numQuit < 1 || numQuit > favoritos.size()) { System.out.println("Opción fuera de rango."); break; }
+						JuegoDeMesa jQuit = favoritos.get(numQuit - 1);
+						logica.quitarFavorito(clienteLogueado, jQuit);
+						System.out.println("'" + jQuit.getNombre() + "' eliminado de favoritos.");
+					} else {
+						System.out.println("Opción inválida.");
+					}
+					break;
+
+				// ─── 9. SALIR Y GUARDAR ───────────────────────────────────────
+				case "9":
 					salir= true;
 					try {
 					    System.out.println("\nGuardando datos en los archivos...");
@@ -420,7 +510,7 @@ public class MainCliente {
 					System.out.println("Chao!");
 					break;
 				default:
-					System.out.println("Opcion invalida. Digite entre 1 y 7.");
+					System.out.println("Opcion invalida. Digite entre 1 y 9.");
 			}
 		}
 
