@@ -424,27 +424,5 @@ public class MainCliente {
 		}
 		scanner.close();
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }
