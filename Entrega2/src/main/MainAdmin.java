@@ -88,7 +88,7 @@ public class MainAdmin {
 			String opcion = scanner.nextLine();
 			switch (opcion) {
 
-				// ─── 1. CREAR TORNEO ────────────────────────────────────────────
+				// CREAR TORNEO
 				case "1":
 					System.out.println("\n--- Crear Torneo ---");
 					System.out.print("Día de la semana del torneo: ");
@@ -129,7 +129,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 2. CATÁLOGO VENTA ───────────────────────────────────────────
+				// CATÁLOGO VENTA
 				case "2":
 					System.out.println("\n--- Catálogo de Venta ---");
 					if (cafe.getInventarioVenta().getJuegos().isEmpty()) {
@@ -141,7 +141,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 3. CATÁLOGO PRÉSTAMO ────────────────────────────────────────
+				// CATÁLOGO PRÉSTAMO
 				case "3":
 					System.out.println("\n--- Catálogo de Préstamo ---");
 					if (cafe.getInventarioPrestamo().getJuegos().isEmpty()) {
@@ -154,7 +154,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 4. MOVER VENTA → PRÉSTAMO ──────────────────────────────────
+				// MOVER VENTA A PRESTAMO 
 				case "4":
 					System.out.println("\n--- Mover juego de Venta a Préstamo ---");
 					if (cafe.getInventarioVenta().getJuegos().isEmpty()) {
@@ -184,7 +184,7 @@ public class MainAdmin {
 					System.out.println("Juego '" + juegoAMover.getNombre() + "' movido a préstamo.");
 					break;
 
-				// ─── 5. REGISTRAR EMPLEADO ──────────────────────────────────────
+				// REGISTRAR EMPLEADO
 				case "5":
 					System.out.println("\n--- Registrar Empleado ---");
 					System.out.println("  1. Mesero");
@@ -212,7 +212,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 6. AGREGAR ITEM MENÚ ───────────────────────────────────────
+				// AGREGAR ITEM MENU
 				case "6":
 					System.out.println("\n--- Agregar Item al Menú ---");
 					System.out.println("  1. Bebida");
@@ -260,7 +260,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 7. SOLICITUDES CAMBIO TURNO ────────────────────────────────
+				// SOLICITUDES CAMBIO TURNO
 				case "7":
 					System.out.println("\n--- GESTIÓN DE SOLICITUDES DE TURNO ---");
 					List<modelo.SolicitudCambioTurno> pendientes = logica.getSolicitudesPendientes();
@@ -306,7 +306,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 8. HISTORIAL DE PRÉSTAMOS ──────────────────────────────────
+				// HISTORIAL DE PRÉSTAMOS
 				case "8":
 					System.out.println("\n--- Historial completo de Préstamos ---");
 					List<Prestamo> historial = cafe.getHistorialPrestamos();
@@ -330,7 +330,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 9. GESTIONAR INVENTARIO ────────────────────────────────────
+				// GESTIONAR INVENTARIO
 				case "9":
 					System.out.println("\n--- Gestión de Inventario ---");
 					System.out.println("  1. Agregar juego al inventario de Venta");
@@ -426,7 +426,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 10. GESTIONAR TURNOS ───────────────────────────────────────
+				// GESTIONAR TURNOS
 				case "10":
 					System.out.println("\n--- Gestión de Turnos de Empleados ---");
 					System.out.println("  1. Crear turno para un empleado");
@@ -480,7 +480,7 @@ public class MainAdmin {
 					}
 					break;
 
-				// ─── 11. INFORMES DE VENTAS ─────────────────────────────────────
+				// INFORMES DE VENTAS
 				case "11":
 					System.out.println("\n--- Informes de Ventas ---");
 					System.out.println("  1. Informe del día");
@@ -525,18 +525,18 @@ public class MainAdmin {
 						catch (NumberFormatException e) { System.out.println("Número inválido."); break; }
 						LocalDate inicioMes = LocalDate.of(anio, mes, 1);
 						LocalDate finMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
-						System.out.println("  Total ventas mes:           $" + logica.getTotalVentasMes(mes, anio));
-						System.out.println("  Ventas de juegos:           $" + logica.getTotalVentasJuegos(inicioMes, finMes));
-						System.out.println("  Ventas de cafetería:        $" + logica.getTotalVentasCafe(inicioMes, finMes));
-						System.out.println("  Total impuestos:            $" + logica.getTotalImpuestos(inicioMes, finMes));
-						System.out.println("  Total propinas:             $" + logica.getTotalPropinas(inicioMes, finMes));
-						System.out.println("  Total costos (subtotales):  $" + logica.getTotalCostos(inicioMes, finMes));
+						System.out.println("  Total ventas mes: $" + logica.getTotalVentasMes(mes, anio));
+						System.out.println("  Ventas de juegos: $" + logica.getTotalVentasJuegos(inicioMes, finMes));
+						System.out.println("  Ventas de cafetería: $" + logica.getTotalVentasCafe(inicioMes, finMes));
+						System.out.println("  Total impuestos: $" + logica.getTotalImpuestos(inicioMes, finMes));
+						System.out.println("  Total propinas: $" + logica.getTotalPropinas(inicioMes, finMes));
+						System.out.println("  Total costos (subtotales): $" + logica.getTotalCostos(inicioMes, finMes));
 					} else {
 						System.out.println("Opción inválida.");
 					}
 					break;
 
-				// ─── 12. SUGERENCIAS DE PLATILLOS ───────────────────────────────
+				// SUGERENCIAS DE PLATILLOS
 				case "12":
 					System.out.println("\n--- Aprobar/Rechazar Sugerencias de Platillos ---");
 					List<SugerenciaPlatillo> sugerencias = logica.getSugerenciasPendientes();

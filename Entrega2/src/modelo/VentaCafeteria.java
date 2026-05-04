@@ -44,11 +44,10 @@ public class VentaCafeteria extends Venta {
     @Override
     public double calcularTotal() {
         double subtotal = calcularSubtotal();
-        double totalSinPropina= (subtotal - calcularDescuento()) * (1 + IMPUESTO_CONSUMO) + propina;
-        
+        double base = (subtotal - calcularDescuento()) * (1 + IMPUESTO_CONSUMO);
         if (this.descuentoTorneoAplicado) {
-        	totalSinPropina *=0.67;
+            base *= 0.67;
         }
-        return totalSinPropina+propina;
+        return base + propina;
     }
 }
