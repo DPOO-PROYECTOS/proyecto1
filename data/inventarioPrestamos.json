@@ -19,13 +19,13 @@
     "estado": "Bueno",
     "tipo": "JuegoDeAccion",
     "aptaMenores5": true,
-    "vecesPrestado": 0,
+    "vecesPrestado": 1,
     "anioPublicacion": 1983,
     "maxJugadores": 8,
     "precioVenta": 0,
     "nombre": "Jenga",
     "soloAdultos": false,
-    "disponible": true
+    "disponible": false
   },
   {
     "minJugadores": 1,

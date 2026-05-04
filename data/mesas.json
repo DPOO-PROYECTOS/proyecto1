@@ -1,8 +1,9 @@
 {"mesas": [
   {
-    "numPersonas": 0,
-    "tieneNinos": false,
+    "numPersonas": 2,
+    "tieneNinos": true,
     "numero": 1,
+    "clienteAsignado": "Sebitas",
     "tieneJovenes": false,
     "capacidad": 2
   },

@@ -1,4 +1,38 @@
 {
-  "turnos": [],
-  "solicitudes": []
+  "turnos": [
+    {
+      "horaFin": "16:00",
+      "empleado": "Staff_juan",
+      "dia": "Lunes",
+      "horaInicio": "08:00"
+    },
+    {
+      "horaFin": "16:00",
+      "empleado": "NicoMesero",
+      "dia": "Lunes",
+      "horaInicio": "08:00"
+    },
+    {
+      "horaFin": "16:00",
+      "empleado": "m3",
+      "dia": "Lunes",
+      "horaInicio": "08:00"
+    },
+    {
+      "horaFin": "16:00",
+      "empleado": "C1",
+      "dia": "Lunes",
+      "horaInicio": "08:00"
+    },
+    {
+      "horaFin": "16:00",
+      "empleado": "c2",
+      "dia": "Lunes",
+      "horaInicio": "08:00"
+    }
+  ],
+  "solicitudes": [{
+    "diaTurno": "Lunes",
+    "solicitante": "c2"
+  }]
 }

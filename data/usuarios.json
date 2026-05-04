@@ -2,17 +2,45 @@
   {
     "password": "1234",
     "tipo": "Admin",
+    "favoritos": [],
     "login": "admin"
   },
   {
     "password": "1234",
     "tipo": "Cliente",
-    "tieneBonoTorneoAmistoso": false,
+    "tieneBonoTorneoAmistoso": true,
+    "favoritos": [],
+    "puntosFidelidad": 0,
     "login": "Sebitas"
   },
   {
     "password": "pass123",
     "tipo": "Mesero",
+    "favoritos": [],
     "login": "NicoMesero"
+  },
+  {
+    "password": "pass123",
+    "tipo": "Mesero",
+    "favoritos": [],
+    "login": "Staff_juan"
+  },
+  {
+    "password": "passc1",
+    "tipo": "Empleado",
+    "favoritos": [],
+    "login": "C1"
+  },
+  {
+    "password": "passc2",
+    "tipo": "Empleado",
+    "favoritos": [],
+    "login": "c2"
+  },
+  {
+    "password": "passm3",
+    "tipo": "Mesero",
+    "favoritos": [],
+    "login": "m3"
   }
 ]}
