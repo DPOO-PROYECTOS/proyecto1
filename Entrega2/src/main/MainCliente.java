@@ -185,9 +185,10 @@ public class MainCliente {
 					}
 					System.out.print("Tienes algún descuento de empleado? (Presiona Enter si no): ");
 					String codigoDesc= scanner.nextLine();
-					System.out.print("¿Tienes un bono de ganador de torneo para aplicar? (S/N): ");
-					String respBono = scanner.nextLine();
-					boolean usarBonoTorneo = respBono.equalsIgnoreCase("S");
+					boolean usarBonoTorneo = clienteLogueado.getTieneBonoTorneoAmistoso();
+					if (usarBonoTorneo) {
+						System.out.println("Tienes un bono de torneo amistoso. Se aplicará automáticamente.");
+					}
 					System.out.print("Cuántos puntos de fidelidad deseas usar? (Tienes " + clienteLogueado.getPuntosFidelidad() + " puntos, Enter=0): ");
 					String puntosUs= scanner.nextLine();
 					int puntosUsar=0;
@@ -265,7 +266,7 @@ public class MainCliente {
 						System.out.println("Debes tener una mesa asignada para solicitar un juego.");
 						break;
 					}
-					// Mostrar disponibles para préstamo
+					// Mostrar disponibles para prestamo
 					List<JuegoDeMesa> disponibles = cafe.getInventarioPrestamo().getDisponibles();
 					if (disponibles.isEmpty()) {
 						System.out.println("No hay juegos disponibles para préstamo en este momento.");
@@ -277,7 +278,7 @@ public class MainCliente {
 								+ " | Jugadores: " + j.getMinJugadores() + "-" + j.getMaxJugadores()
 								+ " | Veces prestado: " + j.getVecesPrestado());
 					}
-					// Opción de devolver
+					// Opcion de devolver
 					PrestamoCliente prestamoActivo = logica.getPrestamoActivoCliente(clienteLogueado);
 					if (prestamoActivo != null && !prestamoActivo.getJuegos().isEmpty()) {
 						System.out.println("\nJuegos que tienes en préstamo actualmente:");
@@ -422,7 +423,9 @@ public class MainCliente {
 					System.out.println("Opcion invalida. Digite entre 1 y 7.");
 			}
 		}
-		scanner.close();
+
+		scanner.close();		
+
 		
 	}
 }

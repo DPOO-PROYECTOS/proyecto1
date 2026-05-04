@@ -38,7 +38,11 @@ public class PersistenciaUsuario {
                 if (tipo.equals("Admin")) {
                     usuario = new modelo.Admin(login, password);
                 } else if (tipo.equals("Cliente")) {
-                    usuario = new modelo.Cliente(login, password);
+                    modelo.Cliente cliente = new modelo.Cliente(login, password);
+                    if (jUsuario.has("tieneBonoTorneoAmistoso")) {
+                        cliente.setTieneBonoTorneoAmistoso(jUsuario.getBoolean("tieneBonoTorneoAmistoso"));
+                    }
+                    usuario = cliente;
                 } else if (tipo.equals("Mesero")) {
                     usuario = new modelo.Mesero(login, password);
                 } else if (tipo.equals("Empleado")) {
@@ -59,6 +63,9 @@ public class PersistenciaUsuario {
             jUsuario.put("login", usuario.getLogin());
             jUsuario.put("password", usuario.getPassword());
             jUsuario.put("tipo", usuario.getClass().getSimpleName());
+            if (usuario instanceof modelo.Cliente) {
+                jUsuario.put("tieneBonoTorneoAmistoso", usuario.getTieneBonoTorneoAmistoso());
+            }
             jUsuarios.put(jUsuario);
         }
         
