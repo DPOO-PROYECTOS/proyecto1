@@ -11,7 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import modelo.Cafe;
+import modelo.Cliente;
 import modelo.Mesa;
+import modelo.Usuario;
 
 public class PersistenciaMesa {
 
@@ -37,7 +39,15 @@ public class PersistenciaMesa {
                 mesa.setNumPersonas(numPersonas);
                 mesa.setTieneNinos(tieneNinos);
                 mesa.setTieneJovenes(tieneJovenes);
-                
+
+                if (jMesa.has("clienteAsignado")) {
+                    String loginCliente = jMesa.getString("clienteAsignado");
+                    Usuario u = cafe.buscarUsuarioPorLogin(loginCliente);
+                    if (u instanceof Cliente) {
+                        mesa.setClienteAsignado((Cliente) u);
+                    }
+                }
+
                 cafe.agregarMesa(mesa);
             }
         }
@@ -53,6 +63,9 @@ public class PersistenciaMesa {
             jMesa.put("numPersonas", mesa.getNumPersonas());
             jMesa.put("tieneNinos", mesa.isTieneNinos());
             jMesa.put("tieneJovenes", mesa.isTieneJovenes());
+            if (mesa.getClienteAsignado() != null) {
+                jMesa.put("clienteAsignado", mesa.getClienteAsignado().getLogin());
+            }
             jMesas.put(jMesa);
         }
         
