@@ -8,7 +8,7 @@ import modelo.Usuario;
 import java.util.List;
 import java.util.Scanner;
 public class MainEmpleado {
-	public static void maint(String[] args) {
+	public static void main(String[] args) {
 		Scanner scanner= new Scanner(System.in);
 		Cafe cafe= new Cafe("Uniandes Board", 100);
 		CafeLogica logica= new CafeLogica(cafe);
