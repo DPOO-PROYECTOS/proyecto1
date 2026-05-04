@@ -772,14 +772,13 @@ public class CafeLogica {
     		throw new IllegalArgumentException ("El usuario no está inscrito a ningún torneo");
     	}
     	int cuposDevueltos= inscripciones.get(jugador);
-    	
-    	torneo.setCuposDisponibles(torneo.getCuposDisponibles()*cuposDevueltos);
-    	
+
+    	torneo.setCuposDisponibles(torneo.getCuposDisponibles() + cuposDevueltos);
+
     	if (torneo instanceof TorneoCompetitivo && !(jugador instanceof Empleado)) {
     		TorneoCompetitivo tc= (TorneoCompetitivo) torneo;
-    		double plataDevuelta= tc.getTarifaEntrada()*cuposDevueltos;
-    		
-    		tc.sumarAlPozo(tc.getPremioAcumulado()-plataDevuelta);
+    		double plataDevuelta= tc.getTarifaEntrada() * cuposDevueltos;
+    		tc.sumarAlPozo(-plataDevuelta);
     	}
     	inscripciones.remove(jugador);
     	System.out.println("Desinscripción exitosa, cupos devueltos: "+ cuposDevueltos);
