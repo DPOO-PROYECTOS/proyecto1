@@ -32,5 +32,18 @@
     "cuposFanaticosRestantes": 2,
     "maxParticipantes": 10,
     "juego": "Operación"
+  },
+  {
+    "tarifa": 10000,
+    "diaSemana": "Lunes",
+    "tipo": "TorneoCompetitivo",
+    "inscripciones": [{
+      "cupos": 1,
+      "login": "Sebitas"
+    }],
+    "cuposDisponibles": 7,
+    "cuposFanaticosRestantes": 2,
+    "maxParticipantes": 10,
+    "juego": "Jenga"
   }
 ]}
