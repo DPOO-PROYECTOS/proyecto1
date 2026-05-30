@@ -54,4 +54,10 @@ public class Usuario {
     public boolean esFavorito(JuegoDeMesa juego) {
         return favoritos.contains(juego);
     }
+
+
+    @Override
+    public String toString() {
+        return login;
+    }
 }

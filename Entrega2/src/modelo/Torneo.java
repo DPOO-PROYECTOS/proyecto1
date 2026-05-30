@@ -41,4 +41,10 @@ public abstract class Torneo {
 
     public int getCuposDisponibles() { return this.cuposDisponibles; }
     public void setCuposDisponibles(int cuposDisponibles) { this.cuposDisponibles = cuposDisponibles; }
+
+
+    @Override
+    public String toString() {
+        return juego.getNombre() + " (" + diaSemana + ")";
+    }
 }

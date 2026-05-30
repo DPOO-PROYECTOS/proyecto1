@@ -5,3 +5,7 @@ bin/
 # Archivos de configuración local de Eclipse
 .metadata/
 *.launch
+
+# Archivos de Claude Code (locales)
+.claude/
+CLAUDE.md

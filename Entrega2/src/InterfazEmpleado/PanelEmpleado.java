@@ -1,4 +1,4 @@
-package Interfaz;
+package InterfazEmpleado;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 public class PanelEmpleado extends JPanel
 {
 	private CafeLogica logica;
-	public PanelEmpleado() {
+	public PanelEmpleado(CafeLogica logica) {
+		this.logica = logica;
 		setBackground(Color.LIGHT_GRAY);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");

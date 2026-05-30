@@ -85,4 +85,10 @@ public abstract class JuegoDeMesa {
         if (soloAdultos && (tieneNinos || tieneJovenes)) return false;
         return true;
     }
+
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
