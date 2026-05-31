@@ -2,11 +2,14 @@ package InterfazEmpleado;
 import javax.swing.*;
 import logica.CafeLogica;
 import modelo.Cafe;
+import modelo.Empleado;
 import persistencia.CentralPersistencia;
 
 public class VentanaEmpleado extends JFrame{
 
 	private CafeLogica logica;
+	private Empleado empleadoLogueado;
+	private VentanaOpcionesEmpleado ventanaOpciones;
 
 	public VentanaEmpleado(CafeLogica logica) {
 		this.logica = logica;
@@ -20,8 +23,27 @@ public class VentanaEmpleado extends JFrame{
 
 		setResizable(false);
 
-		PanelEmpleado panelLogin = new PanelEmpleado(logica);
+		PanelEmpleado panelLogin = new PanelEmpleado(logica, this);
 		add(panelLogin);
+	}
+
+	public void setEmpleadoLogueado(Empleado emp) {
+		this.empleadoLogueado = emp;
+	}
+
+	public Empleado getEmpleadoLogueado() {
+		return empleadoLogueado;
+	}
+
+	public CafeLogica getLogica() {
+		return logica;
+	}
+
+	public void mostrarVentanaOpciones() {
+		if (ventanaOpciones == null || !ventanaOpciones.isVisible()) {
+			ventanaOpciones = new VentanaOpcionesEmpleado(this);
+			ventanaOpciones.setVisible(true);
+		}
 	}
 
 	public static void main(String[] args) {
