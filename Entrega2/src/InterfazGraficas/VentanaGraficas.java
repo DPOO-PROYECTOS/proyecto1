@@ -15,9 +15,10 @@ public class VentanaGraficas extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
-		// TODO: agregar JTabbedPane con PanelPastel, PanelBarras, PanelLineas
-		// pendiente: jfreechart en lib/
-		JLabel lblTemp = new JLabel("Módulo de gráficas en construcción", SwingConstants.CENTER);
-		add(lblTemp);
+		JTabbedPane tabs = new JTabbedPane();
+		tabs.addTab("Disponibilidad Juego", new PanelPastel(logica));
+		tabs.addTab("Ventas Período", new PanelBarras(logica));
+		tabs.addTab("Reservas Semana", new PanelLineas(logica));
+		add(tabs);
 	}
 }
