@@ -32,4 +32,10 @@ public class Turno {
 
     public Empleado getEmpleado() { return empleado; }
     public void setEmpleado(Empleado empleado) { this.empleado = empleado; }
+
+
+    @Override
+    public String toString() {
+        return dia + " " + horaInicio + "-" + horaFin;
+    }
 }

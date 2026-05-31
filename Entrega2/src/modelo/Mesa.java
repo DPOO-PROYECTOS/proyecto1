@@ -82,4 +82,10 @@ public class Mesa {
         this.tieneJovenes = false;
         this.bebidas.clear();
     }
+
+
+    @Override
+    public String toString() {
+        return "Mesa " + numero + " - " + (clienteAsignado != null ? clienteAsignado.getLogin() : "libre");
+    }
 }
